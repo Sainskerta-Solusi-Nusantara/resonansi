@@ -1532,18 +1532,19 @@
     .team { background: var(--grey-50); }
     .team-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
       flex: 1;
+      align-content: start;
     }
     .founder-card {
       background: #fff;
       border: 1px solid var(--line);
-      border-radius: 18px;
+      border-radius: 14px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 8px 24px rgba(15,23,42,0.05);
+      box-shadow: 0 6px 18px rgba(15,23,42,0.05);
       transition: transform 0.2s;
     }
     .founder-card:hover { transform: translateY(-3px); }
@@ -1554,16 +1555,16 @@
       background-color: var(--grey-100);
     }
     .founder-card .body {
-      padding: 20px 22px;
+      padding: 12px 14px 14px;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
     .founder-card .role {
       font-family: var(--font-mono);
-      font-size: 10.5px;
-      letter-spacing: 1.8px;
+      font-size: 9px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
       color: var(--accent);
       font-weight: 700;
@@ -1571,16 +1572,16 @@
     .founder-card h3 {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: clamp(17px, 1.3vw, 20px);
+      font-size: clamp(13px, 1vw, 16px);
       letter-spacing: -0.015em;
       margin: 0;
       line-height: 1.2;
     }
     .founder-card .bg-text {
-      font-size: 13px;
+      font-size: 11px;
       color: var(--muted);
-      line-height: 1.5;
-      margin: 6px 0 0;
+      line-height: 1.45;
+      margin: 4px 0 0;
     }
     .team .advisor-strip {
       margin-top: 18px;
