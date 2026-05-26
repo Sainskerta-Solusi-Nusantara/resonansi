@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System — Resonansi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* Multi-page overrides: every page renders a single .screen full-bleed */
+    .screen { display: block !important; min-height: 100vh; padding: 0; max-width: none; }
+    .screen.active { display: block !important; }
+    .screen .screen-title, .screen .screen-meta { display: none; }
+    .frame-label { display: none; }
+    .frame { border: none; border-radius: 0; box-shadow: none; }
+    /* Demo drawer uses <a> tags now */
+    .demo-group a {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      color: var(--grey-700);
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .demo-group a:hover { background: var(--grey-100); color: var(--ink); }
+    .demo-group a.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+    /* Make all clickable converted links inherit text style */
+    .web-nav a.item { text-decoration: none; color: inherit; }
+    a.logo { text-decoration: none; color: inherit; }
+    a.nav-item { text-decoration: none; color: inherit; }
+    .mega-footer ul li a { color: inherit; text-decoration: none; display: block; }
+  </style>
+</head>
+<body>
+
+<button id="demoToggle" class="demo-toggle" title="Buka indeks halaman" aria-label="Buka indeks halaman demo">
+  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  <span>Demo · 47 halaman</span>
+</button>
+<div id="demoBackdrop" class="demo-backdrop"></div>
+<aside id="demoDrawer" class="demo-drawer" aria-hidden="true">
+  <div class="demo-drawer-head">
+    <div>
+      <strong>Resonansi · Demo Index</strong>
+      <p class="small muted mb-0" style="margin-top:4px;">Klik halaman mana saja untuk berpindah. Header menu di setiap halaman juga aktif.</p>
+    </div>
+    <button class="demo-close" id="demoClose" aria-label="Tutup">×</button>
+  </div>
+
+  <div class="demo-drawer-body">
+    <div class="demo-group">
+          <div class="demo-group-label">⚙ AUTH</div>
+          <a class="drawer-link" href="login.html">Masuk (Login)</a>
+          <a class="drawer-link" href="signup.html">Daftar (Sign Up)</a>
+          <a class="drawer-link" href="forgot-password.html">Lupa Password</a>
+          <a class="drawer-link" href="reset-password.html">Reset Password</a>
+          <a class="drawer-link" href="email-verify.html">Verifikasi Email</a>
+          <a class="drawer-link" href="welcome.html">Welcome / Tour</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">⚙ DESIGN SYSTEM</div>
+          <a class="drawer-link active" href="design-system.html">Design System Showcase</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">MARKETING</div>
+          <a class="drawer-link" href="index.html">Homepage</a>
+          <a class="drawer-link" href="how-it-works-client.html">How it Works — Client</a>
+          <a class="drawer-link" href="how-it-works-advocate.html">How it Works — Advocate</a>
+          <a class="drawer-link" href="solutions.html">Solutions per Industri</a>
+          <a class="drawer-link" href="about.html">Tentang Resonansi</a>
+          <a class="drawer-link" href="trust.html">Trust &amp; Safety</a>
+          <a class="drawer-link" href="faq.html">FAQ / Pusat Bantuan</a>
+          <a class="drawer-link" href="contact.html">Kontak / Demo Request</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">VERTIKAL</div>
+          <a class="drawer-link" href="film.html">Halaman Film</a>
+          <a class="drawer-link" href="politik.html">Halaman Politik</a>
+          <a class="drawer-link" href="browse.html">Browse Advocates</a>
+          <a class="drawer-link" href="pricing.html">Pricing</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">CLIENT (DASHBOARD)</div>
+          <a class="drawer-link" href="client/dashboard.html">Dashboard Home</a>
+          <a class="drawer-link" href="client/brief.html">Buat Brief (Wizard)</a>
+          <a class="drawer-link" href="client/brief-detail.html">Brief Detail</a>
+          <a class="drawer-link" href="client/campaigns.html">Kampanye (List)</a>
+          <a class="drawer-link" href="client/shortlist.html">Shortlist Advocate</a>
+          <a class="drawer-link" href="client/advocate-detail.html">Advocate Detail</a>
+          <a class="drawer-link" href="client/approval.html">Content Approval</a>
+          <a class="drawer-link" href="client/live-campaign.html">Live Campaign</a>
+          <a class="drawer-link" href="client/library.html">Advocate Library</a>
+          <a class="drawer-link" href="client/analytics.html">Analytics</a>
+          <a class="drawer-link" href="client/billing.html">Billing &amp; Invoices</a>
+          <a class="drawer-link" href="client/settings.html">Settings</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">ADVOCATE</div>
+          <a class="drawer-link" href="advocate/onboarding.html">Onboarding (Mobile)</a>
+          <a class="drawer-link" href="advocate/mobile.html">Mobile App</a>
+          <a class="drawer-link" href="advocate/profile.html">Profile Editor</a>
+          <a class="drawer-link" href="advocate/campaigns.html">My Campaigns</a>
+          <a class="drawer-link" href="advocate/apply-brief.html">Apply ke Brief</a>
+          <a class="drawer-link" href="advocate/inbox.html">Inbox / Chat</a>
+          <a class="drawer-link" href="advocate/verification.html">Verification Center</a>
+          <a class="drawer-link" href="advocate/tax-receipt.html">Bukti Potong PPh</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">PAGES TAMBAHAN</div>
+          <a class="drawer-link" href="case-study-detail.html">Studi Kasus — Detail</a>
+          <a class="drawer-link" href="blog-detail.html">Blog — Artikel</a>
+          <a class="drawer-link" href="career.html">Karir</a>
+          <a class="drawer-link" href="press.html">Press &amp; Media</a>
+          <a class="drawer-link" href="trust-audit.html">Trust Audit Publik</a>
+          <a class="drawer-link" href="dispute.html">Laporkan Sengketa</a>
+          <a class="drawer-link" href="notifications.html">Notification Center</a>
+          <a class="drawer-link" href="404.html">404 — Not Found</a>
+        </div>
+  </div>
+</aside>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2h-4v-7H9v7H5a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="m18.5 2.5 3 3L12 15l-4 1 1-4z"/></symbol>
+    <symbol id="i-megaphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2l4 .5V10.5z"/><path d="m7 10.5 12-5v13l-12-5z"/><path d="M11 14v3a2 2 0 0 0 4 0v-1.5"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16l7-3z"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx="1"/><rect x="12" y="8" width="3" height="10" rx="1"/><rect x="17" y="5" width="3" height="13" rx="1"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19 12.97a7.5 7.5 0 0 0 0-1.94l2-1.5-2-3.46-2.34.83a7.5 7.5 0 0 0-1.68-.97L14.5 3.5h-5l-.48 2.43a7.5 7.5 0 0 0-1.68.97L5 6.07 3 9.53l2 1.5a7.5 7.5 0 0 0 0 1.94l-2 1.5 2 3.46 2.34-.83a7.5 7.5 0 0 0 1.68.97L9.5 20.5h5l.48-2.43a7.5 7.5 0 0 0 1.68-.97l2.34.83 2-3.46z"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 4 14 12 14 11 22 20 10 12 10 13 2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><polyline points="2 7 12 13 22 7"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h14v4H5a2 2 0 0 1-2-2"/><path d="M3 7v11a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/><path d="M21 12v4h-4a2 2 0 0 1 0-4z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7" y1="3" x2="7" y2="21"/><line x1="17" y1="3" x2="17" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.6a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-tiktok" viewBox="0 0 24 24" fill="currentColor"><path d="M16 3v3.5a4.5 4.5 0 0 0 4.5 4.5V14a7.5 7.5 0 0 1-4.5-1.5V16a5.5 5.5 0 1 1-5.5-5.5v3a2.5 2.5 0 1 0 2.5 2.5V3z"/></symbol>
+    <symbol id="i-youtube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.2a2.8 2.8 0 0 0-2-2C17 5 12 5 12 5s-5 0-7 .2a2.8 2.8 0 0 0-2 2A29 29 0 0 0 3 12a29 29 0 0 0 0 4.8 2.8 2.8 0 0 0 2 2c2 .2 7 .2 7 .2s5 0 7-.2a2.8 2.8 0 0 0 2-2A29 29 0 0 0 21 12a29 29 0 0 0 0-4.8z"/><polygon points="10 9 16 12 10 15" fill="currentColor"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21l-6.51 7.444L22 22h-6.563l-5.14-6.72L4.4 22H1.642l6.96-7.95L1.5 2h6.7l4.65 6.139zm-2.298 18.4h1.534L7.07 3.46H5.42z"/></symbol>
+    <symbol id="i-attach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 11-8.5 8.5a5 5 0 1 1-7-7L14 4a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 1 1-3-3l7.5-7.5"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-8-8 18-2-8z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h4l2-3h6l2 3h4a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></symbol>
+  </defs>
+</svg>
+
+<section id="s-design-system" class="screen">
+  <div class="frame">
+    <div class="web-header">
+      <a class="logo" href="index.html">RESONANSI</a>
+      <div class="web-nav">
+        <a class="item" href="how-it-works-client.html">Cara Kerja</a>
+        <a class="item" href="how-it-works-advocate.html">Untuk Advocate</a>
+        <a class="item" href="solutions.html">Solusi</a>
+        <a class="item" href="pricing.html">Harga</a>
+        <a class="item" href="about.html">Tentang</a>
+        <a class="item" href="contact.html">Kontak</a>
+      </div>
+      <div class="right row-tight">
+        <span class="pill accent">⚙ Design System v1.0</span>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="mkt-section" style="padding-top: 64px; padding-bottom: 32px;">
+      <div class="container">
+        <div class="eyebrow">RESONANSI DESIGN SYSTEM</div>
+        <h1 style="font-size: 48px; letter-spacing: -0.025em; line-height: 1.1; margin: 12px 0 16px;">
+          Foundation of the Resonansi product.
+        </h1>
+        <p style="font-size: 17px; color: var(--muted); max-width: 680px; line-height: 1.6;">
+          Token, komponen, dan pola yang konsisten di seluruh produk. Versi 1.0 — disusun sebagai sumber kebenaran tunggal untuk tim engineering, design, dan content.
+        </p>
+      </div>
+    </div>
+
+    <!-- Foundations -->
+    <div class="mkt-section alt" style="padding-top: 48px; padding-bottom: 48px;">
+      <div class="container">
+        <div class="eyebrow">01. FOUNDATIONS</div>
+        <h2 class="title">Color Palette</h2>
+        <p class="lead">Trust Blue sebagai identitas. Amber sebagai accent kehangatan. Slate untuk struktur dan kepercayaan.</p>
+
+        <!-- Brand -->
+        <h3 style="font-size: 15px; margin: 24px 0 12px; color: var(--muted);">BRAND</h3>
+        <div style="display:grid; grid-template-columns: repeat(9, 1fr); gap: 4px; border-radius: 12px; overflow: hidden;">
+          <div style="background:#EAF3FF; padding:18px 12px;"><div class="small" style="font-weight:600;">50</div><div class="small muted">#EAF3FF</div></div>
+          <div style="background:#CDE2FF; padding:18px 12px;"><div class="small" style="font-weight:600;">100</div><div class="small muted">#CDE2FF</div></div>
+          <div style="background:#9AC4FF; padding:18px 12px;"><div class="small" style="font-weight:600;">200</div><div class="small muted">#9AC4FF</div></div>
+          <div style="background:#5EA0FF; padding:18px 12px; color:#fff;"><div class="small" style="font-weight:600;">300</div><div class="small" style="opacity:0.8;">#5EA0FF</div></div>
+          <div style="background:#2E7DFB; padding:18px 12px; color:#fff;"><div class="small" style="font-weight:600;">400</div><div class="small" style="opacity:0.8;">#2E7DFB</div></div>
+          <div style="background:#0B5FE0; padding:18px 12px; color:#fff;"><div class="small" style="font-weight:700;">★ 500</div><div class="small" style="opacity:0.8;">#0B5FE0</div></div>
+          <div style="background:#0A4FBB; padding:18px 12px; color:#fff;"><div class="small" style="font-weight:600;">600</div><div class="small" style="opacity:0.8;">#0A4FBB</div></div>
+          <div style="background:#093F94; padding:18px 12px; color:#fff;"><div class="small" style="font-weight:600;">700</div><div class="small" style="opacity:0.8;">#093F94</div></div>
+          <div style="background:#061F49; padding:18px 12px; color:#fff;"><div class="small" style="font-weight:600;">900</div><div class="small" style="opacity:0.8;">#061F49</div></div>
+        </div>
+
+        <!-- Accent Amber -->
+        <h3 style="font-size: 15px; margin: 32px 0 12px; color: var(--muted);">ACCENT (AMBER) · digunakan sparingly untuk CTA hangat &amp; highlight</h3>
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 4px; border-radius: 12px; overflow: hidden; max-width: 440px;">
+          <div style="background:#FFF4D6; padding:18px 12px;"><div class="small" style="font-weight:600;">Soft</div><div class="small muted">#FFF4D6</div></div>
+          <div style="background:#FFC83D; padding:18px 12px;"><div class="small" style="font-weight:600;">400</div><div class="small muted">#FFC83D</div></div>
+          <div style="background:#FFB400; padding:18px 12px;"><div class="small" style="font-weight:700;">★ 500</div><div class="small" style="opacity:0.75;">#FFB400</div></div>
+          <div style="background:#E69E00; padding:18px 12px; color:#fff;"><div class="small" style="font-weight:600;">600</div><div class="small" style="opacity:0.8;">#E69E00</div></div>
+        </div>
+
+        <!-- Neutrals -->
+        <h3 style="font-size: 15px; margin: 32px 0 12px; color: var(--muted);">NEUTRAL · struktur, teks, divider</h3>
+        <div style="display:grid; grid-template-columns: repeat(9, 1fr); gap: 4px; border-radius: 12px; overflow: hidden;">
+          <div style="background:#FFFFFF; padding:18px 12px; border:1px solid var(--line);"><div class="small" style="font-weight:600;">0</div><div class="small muted">#FFFFFF</div></div>
+          <div style="background:#F8FAFC; padding:18px 12px;"><div class="small" style="font-weight:600;">50</div><div class="small muted">#F8FAFC</div></div>
+          <div style="background:#F1F5F9; padding:18px 12px;"><div class="small" style="font-weight:600;">100</div><div class="small muted">#F1F5F9</div></div>
+          <div style="background:#E2E8F0; padding:18px 12px;"><div class="small" style="font-weight:600;">200</div><div class="small muted">#E2E8F0</div></div>
+          <div style="background:#CBD5E1; padding:18px 12px;"><div class="small" style="font-weight:600;">300</div><div class="small muted">#CBD5E1</div></div>
+          <div style="background:#94A3B8; padding:18px 12px; color:#fff;"><div class="small" style="font-weight:600;">400</div><div class="small" style="opacity:0.85;">#94A3B8</div></div>
+          <div style="background:#64748B; padding:18px 12px; color:#fff;"><div class="small" style="font-weight:600;">500</div><div class="small" style="opacity:0.85;">#64748B</div></div>
+          <div style="background:#334155; padding:18px 12px; color:#fff;"><div class="small" style="font-weight:600;">700</div><div class="small" style="opacity:0.85;">#334155</div></div>
+          <div style="background:#0F172A; padding:18px 12px; color:#fff;"><div class="small" style="font-weight:700;">★ 900</div><div class="small" style="opacity:0.85;">#0F172A</div></div>
+        </div>
+
+        <!-- Semantic -->
+        <h3 style="font-size: 15px; margin: 32px 0 12px; color: var(--muted);">SEMANTIC · status &amp; feedback (gunakan hemat)</h3>
+        <div class="grid-4">
+          <div style="border-radius:12px; overflow:hidden; border:1px solid var(--line);">
+            <div style="background:#16A34A; padding:24px; color:#fff;"><strong>Success</strong></div>
+            <div style="padding:10px 14px; background:#DCFCE7;"><span class="small muted">#16A34A · #DCFCE7</span></div>
+          </div>
+          <div style="border-radius:12px; overflow:hidden; border:1px solid var(--line);">
+            <div style="background:#F59E0B; padding:24px; color:#fff;"><strong>Warning</strong></div>
+            <div style="padding:10px 14px; background:#FEF3C7;"><span class="small muted">#F59E0B · #FEF3C7</span></div>
+          </div>
+          <div style="border-radius:12px; overflow:hidden; border:1px solid var(--line);">
+            <div style="background:#DC2626; padding:24px; color:#fff;"><strong>Danger</strong></div>
+            <div style="padding:10px 14px; background:#FEE2E2;"><span class="small muted">#DC2626 · #FEE2E2</span></div>
+          </div>
+          <div style="border-radius:12px; overflow:hidden; border:1px solid var(--line);">
+            <div style="background:#2563EB; padding:24px; color:#fff;"><strong>Info</strong></div>
+            <div style="padding:10px 14px; background:#DBEAFE;"><span class="small muted">#2563EB · #DBEAFE</span></div>
+          </div>
+        </div>
+
+        <!-- Vertical accents -->
+        <h3 style="font-size: 15px; margin: 32px 0 12px; color: var(--muted);">VERTICAL ACCENT · hanya untuk badge &amp; ilustrasi vertikal, bukan untuk CTA</h3>
+        <div class="grid-4">
+          <div style="border-radius:12px; overflow:hidden; border:1px solid var(--line);">
+            <div style="background: linear-gradient(135deg, #7F1D1D, #E11D48); padding:28px; color:#fff;"><strong>Film</strong><div class="small" style="opacity:0.85; margin-top:2px;">Cinema Red</div></div>
+            <div style="padding:10px 14px;"><span class="small muted">#E11D48</span></div>
+          </div>
+          <div style="border-radius:12px; overflow:hidden; border:1px solid var(--line);">
+            <div style="background: linear-gradient(135deg, #0F172A, #475569); padding:28px; color:#fff;"><strong>Politik</strong><div class="small" style="opacity:0.85; margin-top:2px;">Neutral Slate</div></div>
+            <div style="padding:10px 14px;"><span class="small muted">#475569</span></div>
+          </div>
+          <div style="border-radius:12px; overflow:hidden; border:1px solid var(--line);">
+            <div style="background: linear-gradient(135deg, #4C1D95, #7C3AED); padding:28px; color:#fff;"><strong>Brand</strong><div class="small" style="opacity:0.85; margin-top:2px;">Energy Violet</div></div>
+            <div style="padding:10px 14px;"><span class="small muted">#7C3AED</span></div>
+          </div>
+          <div style="border-radius:12px; overflow:hidden; border:1px solid var(--line);">
+            <div style="background: linear-gradient(135deg, #064E3B, #059669); padding:28px; color:#fff;"><strong>NGO</strong><div class="small" style="opacity:0.85; margin-top:2px;">Mission Green</div></div>
+            <div style="padding:10px 14px;"><span class="small muted">#059669</span></div>
+          </div>
+        </div>
+
+        <p class="small muted" style="margin-top: 18px; padding: 14px 18px; background:#fff; border-radius:10px; border:1px solid var(--line); border-left: 3px solid var(--accent);">
+          <strong style="color: var(--ink);">Aturan penggunaan warna:</strong> Brand Blue 500 untuk semua CTA primer. Amber hanya untuk highlight kehangatan (mis. CTA marketing campaign). Vertical accent hanya untuk badge/ilustrasi — tidak boleh dipakai sebagai CTA. Danger hanya untuk error state nyata, bukan untuk "Tolak" button (gunakan ghost style).
+        </p>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="mkt-section" style="padding-top: 48px; padding-bottom: 48px;">
+      <div class="container">
+        <div class="eyebrow">02. FOUNDATIONS</div>
+        <h2 class="title">Typography</h2>
+        <p class="lead">Plus Jakarta Sans untuk display &amp; heading. Inter untuk body &amp; data.</p>
+
+        <div class="card" style="padding: 32px;">
+          <div style="display:grid; grid-template-columns: 220px 1fr; gap: 32px;">
+            <div>
+              <div class="small muted" style="font-weight: 600;">Display XL</div>
+              <div class="small muted">Jakarta · 56 / 64 · 700</div>
+            </div>
+            <div style="font-family: var(--font-display); font-size: 56px; line-height: 1.05; letter-spacing: -0.025em; font-weight: 700;">Suara Anda, Dampak Nyata.</div>
+          </div>
+          <div style="height:1px; background: var(--line); margin: 28px 0;"></div>
+
+          <div style="display:grid; grid-template-columns: 220px 1fr; gap: 32px;">
+            <div><div class="small muted" style="font-weight: 600;">Display L</div><div class="small muted">Jakarta · 44 / 52 · 700</div></div>
+            <div style="font-family: var(--font-display); font-size: 44px; line-height: 1.1; font-weight: 700;">Marketplace advocate terverifikasi.</div>
+          </div>
+          <div style="height:1px; background: var(--line); margin: 28px 0;"></div>
+
+          <div style="display:grid; grid-template-columns: 220px 1fr; gap: 32px;">
+            <div><div class="small muted" style="font-weight: 600;">H1</div><div class="small muted">Jakarta · 32 / 40 · 700</div></div>
+            <div style="font-family: var(--font-display); font-size: 32px; line-height: 1.2; font-weight: 700;">Bagaimana Resonansi bekerja</div>
+          </div>
+          <div style="height:1px; background: var(--line); margin: 28px 0;"></div>
+
+          <div style="display:grid; grid-template-columns: 220px 1fr; gap: 32px;">
+            <div><div class="small muted" style="font-weight: 600;">H2</div><div class="small muted">Jakarta · 26 / 34 · 700</div></div>
+            <div style="font-family: var(--font-display); font-size: 26px; line-height: 1.3; font-weight: 700;">Empat langkah meluncurkan kampanye</div>
+          </div>
+          <div style="height:1px; background: var(--line); margin: 28px 0;"></div>
+
+          <div style="display:grid; grid-template-columns: 220px 1fr; gap: 32px;">
+            <div><div class="small muted" style="font-weight: 600;">H3</div><div class="small muted">Jakarta · 20 / 28 · 600</div></div>
+            <div style="font-family: var(--font-display); font-size: 20px; font-weight: 600;">Featured Advocates minggu ini</div>
+          </div>
+          <div style="height:1px; background: var(--line); margin: 28px 0;"></div>
+
+          <div style="display:grid; grid-template-columns: 220px 1fr; gap: 32px;">
+            <div><div class="small muted" style="font-weight: 600;">Body L</div><div class="small muted">Inter · 16 / 24 · 400</div></div>
+            <div style="font-size: 16px; line-height: 1.5;">Resonansi menghubungkan brand dengan 12.500+ advocate terverifikasi di seluruh Indonesia. Dari mega influencer sampai community leader di tingkat kelurahan.</div>
+          </div>
+          <div style="height:1px; background: var(--line); margin: 28px 0;"></div>
+
+          <div style="display:grid; grid-template-columns: 220px 1fr; gap: 32px;">
+            <div><div class="small muted" style="font-weight: 600;">Body</div><div class="small muted">Inter · 14 / 22 · 400</div></div>
+            <div style="font-size: 14px; line-height: 1.55;">Untuk kebanyakan teks UI dan dashboard data. Tetap nyaman dibaca dalam volume besar.</div>
+          </div>
+          <div style="height:1px; background: var(--line); margin: 28px 0;"></div>
+
+          <div style="display:grid; grid-template-columns: 220px 1fr; gap: 32px;">
+            <div><div class="small muted" style="font-weight: 600;">Caption</div><div class="small muted">Inter · 12 / 18 · 500</div></div>
+            <div style="font-size: 12px; font-weight: 500; color: var(--muted);">LABEL · KETERANGAN · TIMESTAMP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="mkt-section alt" style="padding-top: 48px; padding-bottom: 48px;">
+      <div class="container">
+        <div class="eyebrow">03. COMPONENTS</div>
+        <h2 class="title">Buttons</h2>
+        <p class="lead">5 variant. Primary = brand action. Amber = warmth CTA. Ghost = secondary. Neutral = tertiary. Danger pakai ghost dengan label saja.</p>
+
+        <div class="card" style="padding: 32px;">
+          <div style="display:grid; grid-template-columns: 180px 1fr; gap: 32px; align-items: center;">
+            <strong class="small">Primary</strong>
+            <div class="row-tight">
+              <button class="btn small">Tombol Kecil</button>
+              <button class="btn">Tombol Default</button>
+              <button class="btn lg">Tombol Besar</button>
+              <button class="btn" disabled style="opacity:0.5;">Disabled</button>
+            </div>
+          </div>
+          <div style="height:1px; background: var(--line); margin: 22px 0;"></div>
+
+          <div style="display:grid; grid-template-columns: 180px 1fr; gap: 32px; align-items: center;">
+            <strong class="small">Amber (Warm CTA)</strong>
+            <div class="row-tight">
+              <a class="btn amber small" href="signup.html">Daftar Gratis</a>
+              <a class="btn amber" href="signup.html">Mulai Sekarang</a>
+              <a class="btn amber lg" href="signup.html">Daftar Sebagai Advocate →</a>
+            </div>
+          </div>
+          <div style="height:1px; background: var(--line); margin: 22px 0;"></div>
+
+          <div style="display:grid; grid-template-columns: 180px 1fr; gap: 32px; align-items: center;">
+            <strong class="small">Neutral</strong>
+            <div class="row-tight">
+              <button class="btn neutral small">Lihat Detail</button>
+              <button class="btn neutral">Jadwalkan Demo</button>
+              <button class="btn neutral lg">Pelajari Selengkapnya</button>
+            </div>
+          </div>
+          <div style="height:1px; background: var(--line); margin: 22px 0;"></div>
+
+          <div style="display:grid; grid-template-columns: 180px 1fr; gap: 32px; align-items: center;">
+            <strong class="small">Ghost (Link)</strong>
+            <div class="row-tight">
+              <button class="btn ghost small">Baca Selengkapnya →</button>
+              <button class="btn ghost">Lihat Profil →</button>
+            </div>
+          </div>
+          <div style="height:1px; background: var(--line); margin: 22px 0;"></div>
+
+          <div style="display:grid; grid-template-columns: 180px 1fr; gap: 32px; align-items: center;">
+            <strong class="small">Dark / Destructive</strong>
+            <div class="row-tight">
+              <button class="btn dark">Hubungi Sales</button>
+              <button class="btn danger">Tolak Konten</button>
+              <button class="btn danger small">Hapus dari Library</button>
+            </div>
+          </div>
+
+          <p class="small muted" style="margin-top: 24px; padding: 14px 18px; background: var(--accent-soft); border-radius:10px;">
+            <strong style="color: var(--accent);">Catatan:</strong> Destructive action (Hapus, Tolak) pakai ghost style dengan warna teks netral — tidak pakai merah agresif. Konfirmasi destruktif tetap di modal, bukan inline.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pills & Badges -->
+    <div class="mkt-section" style="padding-top: 48px; padding-bottom: 48px;">
+      <div class="container">
+        <h2 class="title">Pills &amp; Badges</h2>
+        <p class="lead">Pill kecil untuk label, status, dan kategori vertikal.</p>
+
+        <div class="card" style="padding: 32px;">
+          <div style="display:grid; grid-template-columns: 180px 1fr; gap: 32px; align-items: center;">
+            <strong class="small">Default</strong>
+            <div class="row-tight">
+              <span class="pill">Macro Tier</span>
+              <span class="pill">Verified</span>
+              <span class="pill">Jakarta</span>
+              <span class="pill">⭐ 4.8</span>
+            </div>
+          </div>
+          <div style="height:1px; background: var(--line); margin: 18px 0;"></div>
+
+          <div style="display:grid; grid-template-columns: 180px 1fr; gap: 32px; align-items: center;">
+            <strong class="small">Status</strong>
+            <div class="row-tight">
+              <span class="pill accent">✓ Verified</span>
+              <span class="pill" style="background:#DCFCE7; color:#16A34A;"><span class="live-dot" style="margin-right:2px; width:6px; height:6px; box-shadow: 0 0 0 3px rgba(22,163,74,0.15);"></span> Live</span>
+              <span class="pill warn">Menunggu Approval</span>
+              <span class="pill" style="background:var(--grey-100); color:var(--muted);">Draft</span>
+            </div>
+          </div>
+          <div style="height:1px; background: var(--line); margin: 18px 0;"></div>
+
+          <div style="display:grid; grid-template-columns: 180px 1fr; gap: 32px; align-items: center;">
+            <strong class="small">Vertical</strong>
+            <div class="row-tight">
+              <span class="pill film">Film</span>
+              <span class="pill politik">Politik</span>
+              <span class="pill brand">Brand</span>
+              <span class="pill ngo">NGO</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="mkt-section alt" style="padding-top: 48px; padding-bottom: 48px;">
+      <div class="container">
+        <h2 class="title">Form Elements</h2>
+        <p class="lead">Input, select, textarea, dengan label dan helper text yang konsisten.</p>
+
+        <div class="card" style="padding: 32px;">
+          <div class="grid-2" style="gap: 24px;">
+            <div class="form-group">
+              <label>Default Input</label>
+              <div class="field">Placeholder text…</div>
+            </div>
+            <div class="form-group">
+              <label>Dengan Nilai</label>
+              <div class="field" style="color: var(--ink);">PT Falcon Pictures</div>
+            </div>
+            <div class="form-group">
+              <label>Select Dropdown</label>
+              <div class="field">Film · pilih ▾</div>
+            </div>
+            <div class="form-group">
+              <label>Required *</label>
+              <div class="field" style="border-color: var(--accent);">Focus state aktif</div>
+            </div>
+            <div class="form-group">
+              <label>Error State</label>
+              <div class="field" style="border-color: var(--danger); background: #FEE2E2;">Email tidak valid</div>
+              <div class="small" style="color: var(--danger); margin-top: 6px;">Format email salah. Coba lagi.</div>
+            </div>
+            <div class="form-group">
+              <label>Disabled</label>
+              <div class="field" style="background: var(--grey-100); color: var(--muted);">Tidak bisa diubah</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Textarea</label>
+            <textarea class="field" placeholder="Ceritakan kebutuhan kampanye Anda..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Pill Selection</label>
+            <div class="row-tight">
+              <span class="pill" style="cursor:pointer;">&lt; Rp 50 jt</span>
+              <span class="pill accent" style="cursor:pointer;">Rp 50–200 jt ✓</span>
+              <span class="pill" style="cursor:pointer;">Rp 200jt–1M</span>
+              <span class="pill" style="cursor:pointer;">&gt; Rp 1 M</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="mkt-section" style="padding-top: 48px; padding-bottom: 48px;">
+      <div class="container">
+        <h2 class="title">Cards &amp; Surfaces</h2>
+        <p class="lead">Card sebagai building block utama. Subtle border + minimal shadow.</p>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="thumb"></div>
+            <div class="card-body">
+              <span class="pill film">Film</span>
+              <h3 style="margin: 10px 0 8px; font-size: 18px;">Card with Media</h3>
+              <p class="small muted">Untuk advocate, kampanye, studi kasus. Hover effect lifts -1px.</p>
+              <button class="btn ghost small" style="padding-left:0;">Lihat →</button>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 24px;">
+            <div class="ico-wrap" style="width:48px; height:48px; background:var(--accent-soft); color:var(--accent); border-radius:12px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:14px;">
+              <svg width="22" height="22"><use href="#i-shield"/></svg>
+            </div>
+            <h3 style="margin: 0 0 8px; font-size: 18px;">Feature Card</h3>
+            <p class="small muted">Untuk fitur, value prop, security pillar.</p>
+          </div>
+
+          <div class="kpi">
+            <div class="label">KPI Tile</div>
+            <div class="value">3.2 M</div>
+            <div class="delta">+18% vs kemarin</div>
+          </div>
+        </div>
+
+        <h3 style="margin: 32px 0 16px; font-size: 16px; color: var(--muted);">Step Block</h3>
+        <div class="grid-4">
+          <div class="step-block">
+            <div class="num">01</div>
+            <div class="ico-wrap"><svg width="22" height="22"><use href="#i-edit"/></svg></div>
+            <h3>Buat Brief</h3>
+            <p>Wizard 7 langkah, 12 menit.</p>
+          </div>
+          <div class="step-block amber">
+            <div class="num">02</div>
+            <div class="ico-wrap"><svg width="22" height="22"><use href="#i-zap"/></svg></div>
+            <h3>Match Advocate</h3>
+            <p>AI rekomendasi.</p>
+          </div>
+          <div class="step-block green">
+            <div class="num">03</div>
+            <div class="ico-wrap"><svg width="22" height="22"><use href="#i-check"/></svg></div>
+            <h3>Approve</h3>
+            <p>Review &amp; publish.</p>
+          </div>
+          <div class="step-block purple">
+            <div class="num">04</div>
+            <div class="ico-wrap"><svg width="22" height="22"><use href="#i-chart"/></svg></div>
+            <h3>Lacak Hasil</h3>
+            <p>Dashboard real-time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Avatars -->
+    <div class="mkt-section alt" style="padding-top: 48px; padding-bottom: 48px;">
+      <div class="container">
+        <h2 class="title">Avatars</h2>
+        <p class="lead">Gradient palette yang cohesive dengan brand. Tidak ada warna agresif.</p>
+
+        <div class="card" style="padding: 32px;">
+          <h3 style="font-size: 15px; margin: 0 0 16px; color: var(--muted);">SIZE SCALE</h3>
+          <div style="display:flex; align-items:center; gap: 24px; flex-wrap: wrap;">
+            <div style="text-align:center;"><div class="avatar s32 g5">RS</div><div class="small muted" style="margin-top:6px;">s32</div></div>
+            <div style="text-align:center;"><div class="avatar s48 g5">RS</div><div class="small muted" style="margin-top:6px;">s48</div></div>
+            <div style="text-align:center;"><div class="avatar s64 g5">RS</div><div class="small muted" style="margin-top:6px;">s64</div></div>
+            <div style="text-align:center;"><div class="avatar s72 g5">RS</div><div class="small muted" style="margin-top:6px;">s72</div></div>
+            <div style="text-align:center;"><div class="avatar s96 g5">RS</div><div class="small muted" style="margin-top:6px;">s96</div></div>
+            <div style="text-align:center;"><div class="avatar s120 g5">RS</div><div class="small muted" style="margin-top:6px;">s120</div></div>
+          </div>
+
+          <h3 style="font-size: 15px; margin: 32px 0 16px; color: var(--muted);">GRADIENT VARIANTS</h3>
+          <div style="display:flex; align-items:center; gap: 16px; flex-wrap: wrap;">
+            <div style="text-align:center;"><div class="avatar s64 g1">SL</div><div class="small muted" style="margin-top:6px;">g1 · Slate</div></div>
+            <div style="text-align:center;"><div class="avatar s64 g2">AM</div><div class="small muted" style="margin-top:6px;">g2 · Amber</div></div>
+            <div style="text-align:center;"><div class="avatar s64 g3">TL</div><div class="small muted" style="margin-top:6px;">g3 · Teal</div></div>
+            <div style="text-align:center;"><div class="avatar s64 g4">VL</div><div class="small muted" style="margin-top:6px;">g4 · Violet</div></div>
+            <div style="text-align:center;"><div class="avatar s64 g5">BL</div><div class="small muted" style="margin-top:6px;">g5 · Blue</div></div>
+            <div style="text-align:center;"><div class="avatar s64 g6">IN</div><div class="small muted" style="margin-top:6px;">g6 · Indigo</div></div>
+            <div style="text-align:center;"><div class="avatar s64 g7">TR</div><div class="small muted" style="margin-top:6px;">g7 · Terra</div></div>
+            <div style="text-align:center;"><div class="avatar s64 g8">CY</div><div class="small muted" style="margin-top:6px;">g8 · Cyan</div></div>
+            <div style="text-align:center;"><div class="avatar s64 g9">EM</div><div class="small muted" style="margin-top:6px;">g9 · Emerald</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Iconography -->
+    <div class="mkt-section" style="padding-top: 48px; padding-bottom: 48px;">
+      <div class="container">
+        <h2 class="title">Iconography</h2>
+        <p class="lead">Lucide-style stroke icons. 18px untuk inline, 22–26px untuk UI block, 32px untuk hero feature.</p>
+
+        <div class="card" style="padding: 32px;">
+          <div style="display:grid; grid-template-columns: repeat(8, 1fr); gap: 20px; text-align: center;">
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-home"/></svg></div><div class="small muted" style="margin-top:8px;">home</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-edit"/></svg></div><div class="small muted" style="margin-top:8px;">edit</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-megaphone"/></svg></div><div class="small muted" style="margin-top:8px;">campaign</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-bookmark"/></svg></div><div class="small muted" style="margin-top:8px;">library</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-chart"/></svg></div><div class="small muted" style="margin-top:8px;">analytics</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-card"/></svg></div><div class="small muted" style="margin-top:8px;">billing</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-users"/></svg></div><div class="small muted" style="margin-top:8px;">users</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-settings"/></svg></div><div class="small muted" style="margin-top:8px;">settings</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-zap"/></svg></div><div class="small muted" style="margin-top:8px;">zap</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-mail"/></svg></div><div class="small muted" style="margin-top:8px;">inbox</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-wallet"/></svg></div><div class="small muted" style="margin-top:8px;">earning</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-user"/></svg></div><div class="small muted" style="margin-top:8px;">profile</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-shield"/></svg></div><div class="small muted" style="margin-top:8px;">verified</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-check"/></svg></div><div class="small muted" style="margin-top:8px;">check</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-bell"/></svg></div><div class="small muted" style="margin-top:8px;">notif</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-search"/></svg></div><div class="small muted" style="margin-top:8px;">search</div></div>
+            <div><div class="ico-wrap" style="background: var(--grey-100); color: var(--ink); width:48px;height:48px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center;"><svg width="22" height="22"><use href="#i-calendar"/></svg></div><div class="small muted" style="margin-top:8px;">calendar</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spacing & Radius -->
+    <div class="mkt-section alt" style="padding-top: 48px; padding-bottom: 48px;">
+      <div class="container">
+        <h2 class="title">Spacing &amp; Radius</h2>
+        <p class="lead">8-point grid. Radius scale untuk hierarki visual.</p>
+
+        <div class="grid-2" style="gap: 24px;">
+          <div class="card" style="padding: 32px;">
+            <h3 style="font-size: 15px; margin: 0 0 16px; color: var(--muted);">SPACING SCALE</h3>
+            <div style="display:flex; align-items: flex-end; gap: 12px; height: 80px;">
+              <div style="background: var(--accent); width: 4px; height: 4px;" title="4"></div>
+              <div style="background: var(--accent); width: 8px; height: 8px;" title="8"></div>
+              <div style="background: var(--accent); width: 12px; height: 12px;" title="12"></div>
+              <div style="background: var(--accent); width: 16px; height: 16px;" title="16"></div>
+              <div style="background: var(--accent); width: 24px; height: 24px;" title="24"></div>
+              <div style="background: var(--accent); width: 32px; height: 32px;" title="32"></div>
+              <div style="background: var(--accent); width: 40px; height: 40px;" title="40"></div>
+              <div style="background: var(--accent); width: 56px; height: 56px;" title="56"></div>
+              <div style="background: var(--accent); width: 80px; height: 80px;" title="80"></div>
+            </div>
+            <div style="display:flex; gap: 12px; margin-top: 10px; align-items: flex-start;">
+              <span class="small muted" style="width:4px; text-align:center;">4</span>
+              <span class="small muted" style="width:8px; text-align:center;">8</span>
+              <span class="small muted" style="width:12px; text-align:center;">12</span>
+              <span class="small muted" style="width:16px; text-align:center;">16</span>
+              <span class="small muted" style="width:24px; text-align:center;">24</span>
+              <span class="small muted" style="width:32px; text-align:center;">32</span>
+              <span class="small muted" style="width:40px; text-align:center;">40</span>
+              <span class="small muted" style="width:56px; text-align:center;">56</span>
+              <span class="small muted" style="width:80px; text-align:center;">80</span>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 32px;">
+            <h3 style="font-size: 15px; margin: 0 0 16px; color: var(--muted);">RADIUS SCALE</h3>
+            <div style="display:flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+              <div style="text-align:center;"><div style="background: var(--accent); width: 64px; height: 64px; border-radius: 6px;"></div><div class="small muted" style="margin-top:6px;">sm · 6px</div></div>
+              <div style="text-align:center;"><div style="background: var(--accent); width: 64px; height: 64px; border-radius: 10px;"></div><div class="small muted" style="margin-top:6px;">md · 10px</div></div>
+              <div style="text-align:center;"><div style="background: var(--accent); width: 64px; height: 64px; border-radius: 16px;"></div><div class="small muted" style="margin-top:6px;">lg · 16px</div></div>
+              <div style="text-align:center;"><div style="background: var(--accent); width: 64px; height: 64px; border-radius: 24px;"></div><div class="small muted" style="margin-top:6px;">xl · 24px</div></div>
+              <div style="text-align:center;"><div style="background: var(--accent); width: 64px; height: 64px; border-radius: 9999px;"></div><div class="small muted" style="margin-top:6px;">full</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Elevation -->
+    <div class="mkt-section" style="padding-top: 48px; padding-bottom: 48px;">
+      <div class="container">
+        <h2 class="title">Elevation (Shadow)</h2>
+        <p class="lead">4 level untuk depth hierarchy. Subtle, tidak heavy.</p>
+
+        <div class="grid-4">
+          <div style="background: #fff; padding: 24px; border-radius: 12px; box-shadow: var(--shadow-1); text-align: center;">
+            <strong style="font-size: 14px;">sh-1</strong>
+            <p class="small muted" style="margin: 8px 0 0;">Card resting</p>
+          </div>
+          <div style="background: #fff; padding: 24px; border-radius: 12px; box-shadow: var(--shadow-2); text-align: center;">
+            <strong style="font-size: 14px;">sh-2</strong>
+            <p class="small muted" style="margin: 8px 0 0;">Card hover</p>
+          </div>
+          <div style="background: #fff; padding: 24px; border-radius: 12px; box-shadow: var(--shadow-3); text-align: center;">
+            <strong style="font-size: 14px;">sh-3</strong>
+            <p class="small muted" style="margin: 8px 0 0;">Modal, popover</p>
+          </div>
+          <div style="background: #fff; padding: 24px; border-radius: 12px; box-shadow: 0 24px 56px rgba(15,23,42,0.16); text-align: center;">
+            <strong style="font-size: 14px;">sh-4</strong>
+            <p class="small muted" style="margin: 8px 0 0;">Hero, featured</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voice & Tone -->
+    <div class="mkt-section alt" style="padding-top: 48px; padding-bottom: 80px;">
+      <div class="container">
+        <h2 class="title">Voice &amp; Tone</h2>
+        <p class="lead">Setara, profesional, hangat. Bukan corporate-speak, bukan juga terlalu casual.</p>
+
+        <div class="grid-2" style="gap: 24px;">
+          <div class="card" style="padding: 28px;">
+            <strong style="color: var(--success); font-size: 13px; letter-spacing: 0.6px;">✓ DO</strong>
+            <ul style="margin: 12px 0 0; padding-left: 20px; line-height: 2; font-size: 14px;">
+              <li>"Buat brief kamu hari ini — tim kami pandu setiap langkah."</li>
+              <li>"Belum ada peluang cocok. Lengkapi profilmu untuk match lebih baik."</li>
+              <li>"Konten akan otomatis menyertakan disclosure sesuai PKPU."</li>
+              <li>"12.500+ advocate yang sudah terverifikasi KTP."</li>
+            </ul>
+          </div>
+          <div class="card" style="padding: 28px;">
+            <strong style="color: var(--muted); font-size: 13px; letter-spacing: 0.6px;">✗ DON'T</strong>
+            <ul style="margin: 12px 0 0; padding-left: 20px; line-height: 2; font-size: 14px; color: var(--muted);">
+              <li>"Mari sinergikan stakeholder kita." (corporate-speak hampa)</li>
+              <li>"Error 422. Tidak ada data." (cold &amp; cryptic)</li>
+              <li>"Serang dengan narasi kontra." (militer/agresif)</li>
+              <li>"Buzzer terbaik di Indonesia!" (konotasi negatif)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: 32px; padding: 24px 28px; background: #fff; border-radius: 14px; border-left: 4px solid var(--accent);">
+          <strong>Prinsip Voice:</strong> Hindari jargon militer/operasional (target, serang, amunisi). Hindari corporate-speak. Hindari kata "buzzer". Selalu pakai bahasa setara: "advocate &amp; client" — tidak "client &amp; talent".
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer reused -->
+    <div class="mega-footer">
+      <div class="container">
+        <div class="footer-brand">
+          <a class="logo" href="index.html">RESONANSI</a>
+          <p>Design System v1.0 · Diperbarui 2026-05-26</p>
+          <div class="social-icons">
+            <a><svg width="16" height="16"><use href="#i-instagram"/></svg></a>
+            <a><svg width="16" height="16"><use href="#i-x"/></svg></a>
+            <a><svg width="16" height="16"><use href="#i-youtube"/></svg></a>
+            <a><svg width="16" height="16"><use href="#i-tiktok"/></svg></a>
+          </div>
+        </div>
+        <div><h4>Foundations</h4><ul><li><a href="index.html">Colors</a></li><li><a href="index.html">Typography</a></li><li><a href="index.html">Spacing</a></li><li><a href="index.html">Elevation</a></li></ul></div>
+        <div><h4>Components</h4><ul><li><a href="index.html">Buttons</a></li><li><a href="index.html">Pills</a></li><li><a href="index.html">Cards</a></li><li><a href="index.html">Forms</a></li></ul></div>
+        <div><h4>Patterns</h4><ul><li><a href="index.html">Voice &amp; Tone</a></li><li><a href="index.html">Microcopy</a></li><li><a href="index.html">Empty States</a></li><li><a href="index.html">Compliance</a></li></ul></div>
+        <div><h4>Resources</h4><ul><li><a href="index.html">Figma Library</a></li><li><a href="index.html">Storybook</a></li><li><a href="index.html">Tokens (JSON)</a></li><li><a href="index.html">Brand Guidelines</a></li></ul></div>
+      </div>
+      <div class="footer-bottom container">
+        <span>© 2026 PT Resonansi Suara Indonesia · Design System Internal Use</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    var drawer   = document.getElementById('demoDrawer');
+    var backdrop = document.getElementById('demoBackdrop');
+    var toggle   = document.getElementById('demoToggle');
+    var closeBtn = document.getElementById('demoClose');
+    if (!drawer || !backdrop || !toggle || !closeBtn) return;
+    function openDrawer()  { drawer.classList.add('open');    backdrop.classList.add('open');    drawer.setAttribute('aria-hidden','false'); }
+    function closeDrawer() { drawer.classList.remove('open'); backdrop.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
+    toggle.addEventListener('click', openDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDrawer(); });
+  })();
+</script>
+
+</body>
+</html>

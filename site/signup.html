@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Gratis — Resonansi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .screen { display: block !important; min-height: 100vh; }
+    .frame { border: none; border-radius: 0; box-shadow: none; }
+    body { background: #fff; }
+    a.btn { text-decoration: none; }
+
+    .auth-layout {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+    }
+    .auth-art {
+      background:
+        radial-gradient(circle at 75% 20%, rgba(255,180,0,0.3) 0%, transparent 50%),
+        radial-gradient(circle at 25% 75%, rgba(11,95,224,0.32) 0%, transparent 55%),
+        linear-gradient(135deg, #92400E 0%, #C2410C 40%, #B45309 80%, #78350F 100%);
+      color: #fff;
+      padding: 56px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-art::after {
+      content: "";
+      position: absolute;
+      bottom: -150px; right: -150px;
+      width: 480px; height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,180,0,0.2), transparent 70%);
+      pointer-events: none;
+    }
+    .auth-art .logo { background: rgba(255,255,255,0.1); color: #fff; }
+    .auth-art h1 { font-size: 44px; line-height: 1.1; letter-spacing: -0.025em; color: #fff; margin: 0 0 16px; }
+    .auth-art p { font-size: 17px; opacity: 0.88; margin: 0; line-height: 1.55; max-width: 440px; }
+
+    .auth-art .stat-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 56px;
+      position: relative;
+      z-index: 1;
+    }
+    .auth-art .stat-row .stat-item .num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1;
+    }
+    .auth-art .stat-row .stat-item .label {
+      font-size: 13px;
+      opacity: 0.85;
+      margin-top: 6px;
+    }
+
+    .testimonial-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 40px;
+      position: relative;
+      z-index: 1;
+    }
+    .testimonial-card .quote-mark {
+      font-size: 48px;
+      line-height: 1;
+      color: rgba(255,255,255,0.4);
+      font-family: var(--font-display);
+    }
+    .testimonial-card p {
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 4px 0 14px;
+      opacity: 0.95;
+      max-width: none;
+    }
+
+    .auth-form-side {
+      padding: 56px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 580px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .auth-form-side h2 {
+      font-size: 30px;
+      letter-spacing: -0.02em;
+      margin: 0 0 8px;
+    }
+    .auth-form-side .form-sub {
+      color: var(--muted);
+      margin: 0 0 28px;
+      font-size: 14.5px;
+    }
+    .auth-form-side .form-sub a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* Role tabs */
+    .role-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      background: var(--grey-100);
+      padding: 6px;
+      border-radius: 14px;
+      margin-bottom: 28px;
+    }
+    .role-tab {
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: transparent;
+      cursor: pointer;
+      border: none;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--muted);
+      transition: all 0.18s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+    .role-tab.active {
+      background: #fff;
+      color: var(--ink);
+      box-shadow: var(--shadow-1);
+    }
+    .role-tab svg { flex-shrink: 0; }
+
+    .auth-form .form-group { margin-bottom: 14px; }
+    .auth-form .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .auth-form .form-group input,
+    .auth-form .form-group select {
+      width: 100%;
+      padding: 13px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      background: #fff;
+      color: var(--ink);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .auth-form .form-group input:focus,
+    .auth-form .form-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(11,95,224,0.08);
+    }
+    .auth-form .form-group input::placeholder { color: var(--muted-2); }
+
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .auth-form .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--grey-700);
+      margin: 6px 0 22px;
+      cursor: pointer;
+      line-height: 1.55;
+    }
+    .auth-form .checkbox-row input[type="checkbox"] {
+      width: 16px; height: 16px;
+      cursor: pointer;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .auth-form .checkbox-row a { color: var(--accent); text-decoration: none; }
+
+    .auth-art.advocate-mode {
+      background:
+        radial-gradient(circle at 25% 20%, rgba(255,180,0,0.4) 0%, transparent 55%),
+        radial-gradient(circle at 75% 75%, rgba(220,38,38,0.18) 0%, transparent 55%),
+        linear-gradient(135deg, #92400E 0%, #C2410C 50%, #B45309 100%);
+    }
+
+    .role-form { display: none; }
+    .role-form.active { display: block; animation: fadein 0.25s ease; }
+    @keyframes fadein { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform: none; } }
+
+    @media (max-width: 900px) {
+      .auth-layout { grid-template-columns: 1fr; }
+      .auth-art { display: none; }
+      .auth-form-side { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Demo drawer trigger -->
+<button id="demoToggle" class="demo-toggle">
+  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  <span>Demo · 47 halaman</span>
+</button>
+<div id="demoBackdrop" class="demo-backdrop"></div>
+<aside id="demoDrawer" class="demo-drawer" aria-hidden="true">
+  <div class="demo-drawer-head">
+    <div>
+      <strong>Resonansi · Demo Index</strong>
+      <p class="small muted mb-0" style="margin-top:4px;">Klik halaman mana saja untuk berpindah.</p>
+    </div>
+    <button class="demo-close" id="demoClose">×</button>
+  </div>
+  <div class="demo-drawer-body">
+    <div class="demo-group">
+          <div class="demo-group-label">⚙ AUTH</div>
+          <a class="drawer-link" href="login.html">Masuk (Login)</a>
+          <a class="drawer-link active" href="signup.html">Daftar (Sign Up)</a>
+          <a class="drawer-link" href="forgot-password.html">Lupa Password</a>
+          <a class="drawer-link" href="reset-password.html">Reset Password</a>
+          <a class="drawer-link" href="email-verify.html">Verifikasi Email</a>
+          <a class="drawer-link" href="welcome.html">Welcome / Tour</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">⚙ DESIGN SYSTEM</div>
+          <a class="drawer-link" href="design-system.html">Design System Showcase</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">MARKETING</div>
+          <a class="drawer-link" href="index.html">Homepage</a>
+          <a class="drawer-link" href="how-it-works-client.html">How it Works — Client</a>
+          <a class="drawer-link" href="how-it-works-advocate.html">How it Works — Advocate</a>
+          <a class="drawer-link" href="solutions.html">Solutions per Industri</a>
+          <a class="drawer-link" href="about.html">Tentang Resonansi</a>
+          <a class="drawer-link" href="trust.html">Trust &amp; Safety</a>
+          <a class="drawer-link" href="faq.html">FAQ / Pusat Bantuan</a>
+          <a class="drawer-link" href="contact.html">Kontak / Demo Request</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">VERTIKAL</div>
+          <a class="drawer-link" href="film.html">Halaman Film</a>
+          <a class="drawer-link" href="politik.html">Halaman Politik</a>
+          <a class="drawer-link" href="browse.html">Browse Advocates</a>
+          <a class="drawer-link" href="pricing.html">Pricing</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">CLIENT (DASHBOARD)</div>
+          <a class="drawer-link" href="client/dashboard.html">Dashboard Home</a>
+          <a class="drawer-link" href="client/brief.html">Buat Brief (Wizard)</a>
+          <a class="drawer-link" href="client/brief-detail.html">Brief Detail</a>
+          <a class="drawer-link" href="client/campaigns.html">Kampanye (List)</a>
+          <a class="drawer-link" href="client/shortlist.html">Shortlist Advocate</a>
+          <a class="drawer-link" href="client/advocate-detail.html">Advocate Detail</a>
+          <a class="drawer-link" href="client/approval.html">Content Approval</a>
+          <a class="drawer-link" href="client/live-campaign.html">Live Campaign</a>
+          <a class="drawer-link" href="client/library.html">Advocate Library</a>
+          <a class="drawer-link" href="client/analytics.html">Analytics</a>
+          <a class="drawer-link" href="client/billing.html">Billing &amp; Invoices</a>
+          <a class="drawer-link" href="client/settings.html">Settings</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">ADVOCATE</div>
+          <a class="drawer-link" href="advocate/onboarding.html">Onboarding (Mobile)</a>
+          <a class="drawer-link" href="advocate/mobile.html">Mobile App</a>
+          <a class="drawer-link" href="advocate/profile.html">Profile Editor</a>
+          <a class="drawer-link" href="advocate/campaigns.html">My Campaigns</a>
+          <a class="drawer-link" href="advocate/apply-brief.html">Apply ke Brief</a>
+          <a class="drawer-link" href="advocate/inbox.html">Inbox / Chat</a>
+          <a class="drawer-link" href="advocate/verification.html">Verification Center</a>
+          <a class="drawer-link" href="advocate/tax-receipt.html">Bukti Potong PPh</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">PAGES TAMBAHAN</div>
+          <a class="drawer-link" href="case-study-detail.html">Studi Kasus — Detail</a>
+          <a class="drawer-link" href="blog-detail.html">Blog — Artikel</a>
+          <a class="drawer-link" href="career.html">Karir</a>
+          <a class="drawer-link" href="press.html">Press &amp; Media</a>
+          <a class="drawer-link" href="trust-audit.html">Trust Audit Publik</a>
+          <a class="drawer-link" href="dispute.html">Laporkan Sengketa</a>
+          <a class="drawer-link" href="notifications.html">Notification Center</a>
+          <a class="drawer-link" href="404.html">404 — Not Found</a>
+        </div>
+  </div>
+</aside>
+
+<!-- SVG sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></symbol>
+    <symbol id="i-megaphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2l4 .5V10.5z"/><path d="m7 10.5 12-5v13l-12-5z"/><path d="M11 14v3a2 2 0 0 0 4 0v-1.5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 4 14 12 14 11 22 20 10 12 10 13 2"/></symbol>
+  </defs>
+</svg>
+
+<div class="auth-layout">
+
+  <!-- LEFT: brand art (changes based on role) -->
+  <aside class="auth-art" id="brandArt">
+    <a class="logo" href="index.html">RESONANSI</a>
+
+    <div style="position: relative; z-index: 1;">
+      <h1 id="artHeadline">Mulai kampanye pertamamu hari ini.</h1>
+      <p id="artLead">Bergabunglah dengan 340+ brand &amp; tim sukses yang sudah memakai Resonansi untuk akuisisi audiens dan pemilih.</p>
+
+      <div class="stat-row" id="artStats">
+        <div class="stat-item">
+          <div class="num">12.5K</div>
+          <div class="label">Advocate Verified</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">340+</div>
+          <div class="label">Brand &amp; Tim Sukses</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">4.9★</div>
+          <div class="label">Rata-rata Rating</div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="quote-mark">"</div>
+        <p id="artQuote">Premiere film kami penuh berkat Resonansi — tier 4 community lead yang mereka punya benar-benar bawa massa real ke bioskop, bukan cuma like di sosmed.</p>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="avatar s32 g1" id="artAvatar" style="background: linear-gradient(135deg, #FDBA74, #C2410C);">AM</div>
+          <div>
+            <strong style="font-size:13px;" id="artAuthor">Andi Maulana</strong>
+            <div class="small" style="opacity:0.7;" id="artRole">Head of Marketing · Falcon Pictures</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="small" style="opacity: 0.6; position: relative; z-index: 1;">
+      © 2026 PT Resonansi Suara Indonesia
+    </div>
+  </aside>
+
+  <!-- RIGHT: form -->
+  <main class="auth-form-side">
+    <a class="btn ghost" href="index.html" style="align-self:flex-start; padding-left: 0; margin-bottom: 20px;">← Kembali ke beranda</a>
+
+    <h2>Daftar Gratis</h2>
+    <p class="form-sub">Sudah punya akun? <a href="login.html">Masuk →</a></p>
+
+    <!-- Role selector -->
+    <div class="role-tabs">
+      <button class="role-tab active" data-role="client" onclick="switchRole('client')">
+        <svg width="18" height="18"><use href="#i-megaphone"/></svg>
+        Saya Brand / Tim Kampanye
+      </button>
+      <button class="role-tab" data-role="advocate" onclick="switchRole('advocate')">
+        <svg width="18" height="18"><use href="#i-user"/></svg>
+        Saya Advocate
+      </button>
+    </div>
+
+    <!-- CLIENT FORM -->
+    <form class="auth-form role-form active" id="clientForm" onsubmit="event.preventDefault(); window.location.href='welcome.html';">
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Nama Lengkap *</label>
+          <input type="text" placeholder="Nama Anda" required>
+        </div>
+        <div class="form-group">
+          <label>Nomor WhatsApp *</label>
+          <input type="tel" placeholder="+62 8xx-xxxx-xxxx" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email Kerja *</label>
+        <input type="email" placeholder="nama@perusahaan.com" required>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Nama Perusahaan *</label>
+          <input type="text" placeholder="PT atau Tim Sukses" required>
+        </div>
+        <div class="form-group">
+          <label>Vertikal Utama *</label>
+          <select required>
+            <option value="">Pilih vertikal</option>
+            <option>Film &amp; Hiburan</option>
+            <option>Komunikasi Politik</option>
+            <option>Brand &amp; FMCG</option>
+            <option>NGO &amp; Lembaga</option>
+            <option>Kementerian / Pemda</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Password *</label>
+        <input type="password" placeholder="Minimal 8 karakter" required minlength="8">
+      </div>
+
+      <label class="checkbox-row">
+        <input type="checkbox" required>
+        <span>Saya menyetujui <a href="#">Syarat Layanan</a> dan <a href="#">Kebijakan Privasi</a> Resonansi.</span>
+      </label>
+
+      <button type="submit" class="btn lg" style="width:100%; justify-content:center;">
+        Buat Akun &amp; Masuk Dashboard →
+      </button>
+
+      <p class="small muted" style="text-align:center; margin-top: 18px;">
+        Gratis selamanya · Bayar hanya saat kampanye jalan
+      </p>
+    </form>
+
+    <!-- ADVOCATE FORM -->
+    <form class="auth-form role-form" id="advocateForm" onsubmit="event.preventDefault(); window.location.href='advocate/onboarding.html';">
+      <div class="form-group">
+        <label>Nama Lengkap (sesuai KTP) *</label>
+        <input type="text" placeholder="Nama lengkap kamu" required>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" placeholder="email@example.com" required>
+        </div>
+        <div class="form-group">
+          <label>Nomor HP *</label>
+          <input type="tel" placeholder="+62 8xx-xxxx-xxxx" required>
+        </div>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Tanggal Lahir *</label>
+          <input type="date" required>
+        </div>
+        <div class="form-group">
+          <label>Kota Domisili *</label>
+          <input type="text" placeholder="Jakarta, Bandung, dll" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Password *</label>
+        <input type="password" placeholder="Minimal 8 karakter" required minlength="8">
+      </div>
+
+      <div style="padding: 14px 16px; background: var(--amber-soft); border-radius: 10px; margin-bottom: 18px;">
+        <strong style="font-size: 13px; color: #78350F;">Langkah berikutnya: Verifikasi (8 menit)</strong>
+        <p class="small" style="margin: 4px 0 0; color: #78350F; opacity:0.85;">Upload KTP, selfie biometrik, dan sambungkan akun sosmed untuk mulai dapat peluang.</p>
+      </div>
+
+      <label class="checkbox-row">
+        <input type="checkbox" required>
+        <span>Saya menyetujui <a href="#">Syarat Layanan</a>, <a href="#">Kode Etik Advocate</a>, dan <a href="#">Kebijakan Privasi</a>.</span>
+      </label>
+
+      <button type="submit" class="btn lg amber" style="width:100%; justify-content:center;">
+        Lanjut ke Verifikasi →
+      </button>
+
+      <p class="small muted" style="text-align:center; margin-top: 18px;">
+        Gratis selamanya · Estimasi penghasilan: Rp 1–6 juta/bulan
+      </p>
+    </form>
+  </main>
+</div>
+
+<script>
+  // Role switcher
+  function switchRole(role) {
+    document.querySelectorAll('.role-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.role === role);
+    });
+    document.querySelectorAll('.role-form').forEach(f => {
+      f.classList.toggle('active', f.id === role + 'Form');
+    });
+
+    // Update brand art content based on role
+    const art = document.getElementById('brandArt');
+    if (role === 'advocate') {
+      art.classList.add('advocate-mode');
+      document.getElementById('artHeadline').textContent = 'Suaramu punya nilai. Sekarang juga bisa jadi penghasilan.';
+      document.getElementById('artLead').textContent = 'Bergabunglah dengan 12.500+ advocate verified di Indonesia. Pilih kampanye yang sesuai dengan nilai dan audiensmu.';
+      document.getElementById('artStats').innerHTML = `
+        <div class="stat-item"><div class="num">Rp 4.2jt</div><div class="label">Rata-rata earning bulanan</div></div>
+        <div class="stat-item"><div class="num">87%</div><div class="label">Dibayar dalam 7 hari</div></div>
+        <div class="stat-item"><div class="num">8 min</div><div class="label">Estimasi onboarding</div></div>
+      `;
+      document.getElementById('artQuote').textContent = 'Saya guru SMA dengan komunitas parenting kecil. Setelah daftar Resonansi, saya bisa nambah pemasukan Rp 3 juta/bulan tanpa harus jadi selebgram.';
+      document.getElementById('artAuthor').textContent = 'Nurfitri';
+      document.getElementById('artRole').textContent = 'Citizen Tier · Yogyakarta';
+      document.getElementById('artAvatar').textContent = 'NF';
+      document.getElementById('artAvatar').className = 'avatar s32 g2';
+    } else {
+      art.classList.remove('advocate-mode');
+      document.getElementById('artHeadline').textContent = 'Mulai kampanye pertamamu hari ini.';
+      document.getElementById('artLead').textContent = 'Bergabunglah dengan 340+ brand & tim sukses yang sudah memakai Resonansi untuk akuisisi audiens dan pemilih.';
+      document.getElementById('artStats').innerHTML = `
+        <div class="stat-item"><div class="num">12.5K</div><div class="label">Advocate Verified</div></div>
+        <div class="stat-item"><div class="num">340+</div><div class="label">Brand &amp; Tim Sukses</div></div>
+        <div class="stat-item"><div class="num">4.9★</div><div class="label">Rata-rata Rating</div></div>
+      `;
+      document.getElementById('artQuote').textContent = 'Premiere film kami penuh berkat Resonansi — tier 4 community lead yang mereka punya benar-benar bawa massa real ke bioskop, bukan cuma like di sosmed.';
+      document.getElementById('artAuthor').textContent = 'Andi Maulana';
+      document.getElementById('artRole').textContent = 'Head of Marketing · Falcon Pictures';
+      document.getElementById('artAvatar').textContent = 'AM';
+      document.getElementById('artAvatar').className = 'avatar s32 g7';
+    }
+  }
+
+  // Demo drawer
+  const drawer = document.getElementById('demoDrawer');
+  const backdrop = document.getElementById('demoBackdrop');
+  const toggle = document.getElementById('demoToggle');
+  const closeBtn = document.getElementById('demoClose');
+  function openDrawer() { drawer.classList.add('open'); backdrop.classList.add('open'); }
+  function closeDrawer() { drawer.classList.remove('open'); backdrop.classList.remove('open'); }
+  toggle.addEventListener('click', openDrawer);
+  closeBtn.addEventListener('click', closeDrawer);
+  backdrop.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+</script>
+
+</body>
+</html>

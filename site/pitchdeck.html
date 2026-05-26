@@ -1,0 +1,3350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pitch Deck — Resonansi · Pre-Seed 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+  <style>
+    /* ====================================================================
+       PITCH DECK — Custom Standalone Stylesheet
+       Reuses Resonansi brand tokens but optimized for full-viewport slides.
+    ==================================================================== */
+    :root {
+      --ink: #0F172A;
+      --ink-soft: #1E293B;
+      --ink-deep: #060B1A;
+      --muted: #64748B;
+      --muted-2: #94A3B8;
+      --line: #E2E8F0;
+      --line-2: #F1F5F9;
+      --line-dark: rgba(255,255,255,0.10);
+      --grey-50: #F8FAFC;
+      --grey-100: #F1F5F9;
+      --grey-700: #334155;
+      --accent: #0B5FE0;
+      --accent-600: #0A4FBB;
+      --accent-soft: #EAF3FF;
+      --amber: #FFB400;
+      --amber-soft: #FFF4D6;
+      --success: #16A34A;
+      --success-soft: #DCFCE7;
+      --danger: #DC2626;
+      --danger-soft: #FEE2E2;
+      --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: #000;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ---------- Slide stack ---------- */
+    .deck {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(40px);
+      transition: opacity 0.45s ease, transform 0.55s cubic-bezier(.2,.7,.25,1), visibility 0s linear 0.5s;
+      background: #fff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+      transition: opacity 0.45s ease, transform 0.55s cubic-bezier(.2,.7,.25,1), visibility 0s linear 0s;
+      z-index: 2;
+    }
+    .slide.prev {
+      transform: translateX(-40px);
+    }
+
+    /* ---------- Slide foundations ---------- */
+    .slide-inner {
+      flex: 1;
+      padding: 5vh 6vw;
+      display: flex;
+      flex-direction: column;
+      gap: 2.4vh;
+      max-width: 1600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .slide.dark { background: var(--ink-deep); color: #fff; }
+    .slide.dark .muted { color: #94A3B8; }
+
+    .eyebrow {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.4px;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--accent);
+      display: inline-block;
+    }
+    .slide.dark .eyebrow { color: var(--amber); }
+    .slide.dark .eyebrow::before { background: var(--amber); }
+
+    h1.slide-title, h2.slide-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin: 0;
+      line-height: 1.04;
+    }
+    .slide.dark h1.slide-title, .slide.dark h2.slide-title { color: #fff; }
+
+    h1.slide-title { font-size: clamp(40px, 5.4vw, 84px); }
+    h2.slide-title { font-size: clamp(36px, 4.4vw, 64px); }
+    .lead {
+      font-family: var(--font-body);
+      font-size: clamp(16px, 1.4vw, 22px);
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 900px;
+      margin: 0;
+    }
+    .slide.dark .lead { color: #CBD5E1; }
+
+    .accent { color: var(--accent); }
+    .amber-text { color: var(--amber); }
+
+    /* ---------- Slide footer (page chrome) ---------- */
+    .slide-footer {
+      position: absolute;
+      bottom: 2.4vh;
+      left: 6vw;
+      right: 6vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-body);
+      font-size: 11px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--muted-2);
+      pointer-events: none;
+      z-index: 5;
+    }
+    .slide.dark .slide-footer { color: rgba(255,255,255,0.4); }
+    .slide-footer .brand { font-weight: 600; }
+    .slide-footer .num { font-family: var(--font-mono); font-weight: 600; }
+    .slide.cover .slide-footer { display: none; }
+
+    /* ---------- Deck navigation (bottom strip) ---------- */
+    .deck-nav {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+      font-family: var(--font-body);
+      color: #fff;
+    }
+    .nav-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.18); transform: translateY(-1px); }
+    .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .nav-btn svg { width: 18px; height: 18px; }
+    .slide-counter {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #fff;
+      min-width: 56px;
+      text-align: center;
+    }
+    .slide-counter .total { opacity: 0.5; }
+    .slide-dots {
+      display: flex;
+      gap: 4px;
+      max-width: 280px;
+      padding: 0 8px;
+    }
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .dot:hover { background: rgba(255,255,255,0.6); transform: scale(1.4); }
+    .dot.active {
+      background: var(--amber);
+      width: 18px; border-radius: 999px;
+    }
+
+    /* Demo drawer toggle (top-right) */
+    .deck-corner {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 50;
+      display: flex;
+      gap: 8px;
+    }
+    .corner-btn {
+      background: rgba(15, 23, 42, 0.85);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(14px);
+      transition: background 0.15s, transform 0.15s;
+    }
+    .corner-btn:hover { background: rgba(15,23,42,0.95); transform: translateY(-1px); }
+    .corner-btn svg { width: 14px; height: 14px; }
+
+    /* ============================================================
+       SLIDE 1 — Cover
+    ============================================================ */
+    .cover {
+      background:
+        radial-gradient(60% 80% at 70% 30%, rgba(255,180,0,0.18), transparent 60%),
+        radial-gradient(50% 60% at 20% 80%, rgba(11,95,224,0.30), transparent 60%),
+        var(--ink-deep);
+      color: #fff;
+      align-items: center;
+      justify-content: center;
+    }
+    .cover .slide-inner {
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      text-align: left;
+      max-width: 1400px;
+      padding: 0 8vw;
+    }
+    .cover-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      width: 100%;
+      align-items: center;
+      gap: 60px;
+    }
+    .cover .wordmark {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(64px, 9vw, 140px);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: #fff;
+      margin: 0 0 18px;
+      position: relative;
+    }
+    .cover .wordmark::after {
+      content: "";
+      display: block;
+      width: 90px;
+      height: 6px;
+      background: var(--amber);
+      margin-top: 24px;
+      border-radius: 999px;
+    }
+    .cover .tagline {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(20px, 1.9vw, 28px);
+      color: rgba(255,255,255,0.92);
+      margin: 32px 0 14px;
+      letter-spacing: -0.012em;
+    }
+    .cover .sub {
+      font-family: var(--font-body);
+      font-size: clamp(15px, 1.2vw, 18px);
+      color: rgba(255,255,255,0.62);
+      margin: 0 0 36px;
+      max-width: 520px;
+      line-height: 1.55;
+    }
+    .cover .meta {
+      display: inline-flex;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 16px;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+    .cover .meta .dot { background: var(--amber); width: 8px; height: 8px; border-radius: 50%; }
+    .cover-art {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      max-width: 520px;
+      justify-self: end;
+    }
+    .cover-art svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .cover .corner-mark {
+      position: absolute;
+      top: 5vh;
+      left: 6vw;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .cover .corner-mark::before {
+      content: "";
+      display: inline-block;
+      width: 22px; height: 1px;
+      background: rgba(255,255,255,0.4);
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+    .cover .corner-mark-right {
+      position: absolute;
+      top: 5vh; right: 6vw;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .cover .corner-bottom {
+      position: absolute;
+      bottom: 5vh; left: 6vw; right: 6vw;
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ============================================================
+       SLIDE 2 — Problem
+    ============================================================ */
+    .problem .slide-inner {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .problem .text-col h1 {
+      margin-bottom: 24px;
+    }
+    .problem .big-stat {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 3.8vw, 56px);
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+    .problem .big-stat strong { color: var(--accent); }
+    .problem .bullet-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .bullet-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .bullet-card .ico-box {
+      width: 36px; height: 36px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      background: var(--danger-soft);
+      color: var(--danger);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bullet-card .ico-box svg { width: 18px; height: 18px; }
+    .bullet-card strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 16px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+    .bullet-card p {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.45;
+    }
+    .problem .closing {
+      margin-top: 28px;
+      padding: 18px 22px;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 14px;
+      font-family: var(--font-display);
+      font-size: clamp(15px, 1.2vw, 18px);
+      font-weight: 600;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+    }
+    .problem .closing strong { color: var(--amber); }
+    .problem .image-col {
+      position: relative;
+      width: 100%;
+      height: 78vh;
+      max-height: 720px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(15,23,42,0.18);
+    }
+    .problem .image-col img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+    }
+    .problem .image-col::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15,23,42,0.0) 50%, rgba(15,23,42,0.55) 100%);
+    }
+    .problem .image-tag {
+      position: absolute;
+      bottom: 20px; left: 20px;
+      z-index: 2;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    /* ============================================================
+       SLIDE 3 — Why Now
+    ============================================================ */
+    .why-now { background: var(--grey-50); }
+    .why-now .col-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      flex: 1;
+      align-items: stretch;
+    }
+    .wave-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+      transition: transform 0.2s;
+    }
+    .wave-card:hover { transform: translateY(-3px); }
+    .wave-card .wave-img {
+      aspect-ratio: 16/10;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--ink);
+      position: relative;
+    }
+    .wave-card .wave-img::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(15,23,42,0) 40%, rgba(15,23,42,0.75) 100%);
+    }
+    .wave-card .wave-num {
+      position: absolute;
+      top: 16px; left: 16px;
+      background: var(--amber);
+      color: var(--ink);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 14px;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: -0.01em;
+      z-index: 2;
+    }
+    .wave-card .wave-body {
+      padding: 22px 24px 26px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .wave-card h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(18px, 1.4vw, 22px);
+      margin: 0 0 8px;
+      letter-spacing: -0.018em;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    .wave-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0;
+    }
+    .wave-card .wave-impact {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 13px;
+      letter-spacing: -0.005em;
+    }
+    .why-now .closing-strip {
+      margin-top: 20px;
+      padding: 18px 22px;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 14px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(15px, 1.15vw, 18px);
+      letter-spacing: -0.01em;
+    }
+    .why-now .closing-strip .badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--amber);
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       SLIDE 4 — Solution
+    ============================================================ */
+    .solution { background: #fff; }
+    .solution .marketplace-diagram {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr 1fr;
+      gap: 24px;
+      align-items: center;
+      padding: 2vh 0;
+    }
+    .side-card {
+      background: #fff;
+      border: 2px solid var(--ink);
+      border-radius: 22px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(15,23,42,0.08);
+    }
+    .side-card .side-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .side-card .side-ico {
+      width: 64px; height: 64px;
+      border-radius: 16px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .side-card .side-ico svg { width: 32px; height: 32px; }
+    .side-card.demand .side-ico { background: var(--amber-soft); color: #B45309; }
+    .side-card h3 {
+      font-family: var(--font-display);
+      font-size: clamp(18px, 1.5vw, 22px);
+      font-weight: 700;
+      margin: 0 0 6px;
+      letter-spacing: -0.015em;
+    }
+    .side-card .desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0 0 16px;
+      line-height: 1.45;
+    }
+    .side-card .tag-row {
+      display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
+    }
+    .side-card .tag {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--grey-100);
+      color: var(--grey-700);
+      font-weight: 500;
+    }
+    .matching-core {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-600) 100%);
+      color: #fff;
+      border-radius: 22px;
+      padding: 32px 28px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 16px 40px rgba(11,95,224,0.28);
+    }
+    .matching-core .core-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 14px;
+    }
+    .matching-core .core-ico {
+      width: 72px; height: 72px;
+      margin: 0 auto 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .matching-core .core-ico svg { width: 36px; height: 36px; }
+    .matching-core h3 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 1.7vw, 28px);
+      margin: 0 0 8px;
+      letter-spacing: -0.02em;
+    }
+    .matching-core .core-desc {
+      font-size: 13.5px;
+      opacity: 0.85;
+      margin: 0 0 18px;
+      line-height: 1.5;
+    }
+    .matching-core .core-meta {
+      display: flex; justify-content: center; gap: 10px;
+      flex-wrap: wrap;
+    }
+    .matching-core .meta-pill {
+      background: rgba(255,255,255,0.18);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 500;
+    }
+    .arrow-line {
+      position: absolute;
+      top: 50%; left: 0; right: 0;
+      height: 2px;
+      background: var(--line);
+      z-index: -1;
+    }
+    .escrow-band {
+      background: var(--ink);
+      color: #fff;
+      border-radius: 16px;
+      padding: 16px 24px;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      font-size: 14px;
+    }
+    .escrow-band .ico {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--amber);
+      color: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .solution .reframe-line {
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: clamp(18px, 1.5vw, 24px);
+      font-weight: 600;
+      margin-top: 12px;
+      color: var(--ink);
+      letter-spacing: -0.015em;
+    }
+    .solution .reframe-line strong { color: var(--accent); }
+    .solution .reframe-line em { color: var(--amber); font-style: normal; font-weight: 700; }
+
+    /* ============================================================
+       SLIDE 5 — Reframe
+    ============================================================ */
+    .reframe { background: var(--grey-50); }
+    .compare-table {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 8px 28px rgba(15,23,42,0.06);
+    }
+    .compare-col {
+      padding: 24px 28px;
+    }
+    .compare-col.left {
+      background: linear-gradient(180deg, #FFFBFB 0%, #FFF5F5 100%);
+      border-right: 1px solid var(--line);
+    }
+    .compare-col.right {
+      background: linear-gradient(180deg, #F7FBFF 0%, #EAF3FF 100%);
+    }
+    .compare-head {
+      display: flex; align-items: center; gap: 10px;
+      padding-bottom: 16px;
+      margin-bottom: 18px;
+      border-bottom: 2px solid;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(20px, 1.6vw, 24px);
+      letter-spacing: -0.015em;
+    }
+    .left .compare-head { color: var(--danger); border-color: rgba(220,38,38,0.2); }
+    .right .compare-head { color: var(--accent); border-color: rgba(11,95,224,0.2); }
+    .compare-head .ico {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .left .compare-head .ico { background: var(--danger-soft); color: var(--danger); }
+    .right .compare-head .ico { background: var(--accent-soft); color: var(--accent); }
+    .compare-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line-2);
+      font-size: clamp(15px, 1.2vw, 18px);
+      font-family: var(--font-body);
+      font-weight: 500;
+    }
+    .compare-row:last-child { border-bottom: none; }
+    .left .compare-row { color: var(--ink); text-decoration: line-through; text-decoration-color: rgba(220,38,38,0.5); text-decoration-thickness: 2px; }
+    .right .compare-row { color: var(--ink); }
+    .compare-row .bullet {
+      width: 20px; height: 20px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .left .compare-row .bullet { background: var(--danger-soft); color: var(--danger); }
+    .right .compare-row .bullet { background: var(--success-soft); color: var(--success); }
+    .compare-row .bullet svg { width: 12px; height: 12px; }
+
+    /* ============================================================
+       SLIDE 6 — Product
+    ============================================================ */
+    .product { background: #fff; }
+    .product-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+    .product-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 28px 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(15,23,42,0.10);
+      border-color: var(--accent);
+    }
+    .product-card .module-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .product-card h3 {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 1.5vw, 24px);
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: -0.018em;
+      line-height: 1.2;
+    }
+    .product-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0;
+    }
+    .product-mock {
+      margin-top: auto;
+      background: var(--grey-50);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      min-height: 180px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* CV upload mock */
+    .mock-cv .mock-upload {
+      border: 2px dashed var(--accent);
+      border-radius: 10px;
+      padding: 14px;
+      background: var(--accent-soft);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 12px;
+    }
+    .mock-cv .mock-upload .ic {
+      width: 28px; height: 28px;
+      background: #fff;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+    }
+    .mock-cv .mock-upload .lbl { font-size: 12px; font-weight: 600; color: var(--accent); }
+    .mock-tag-row { display: flex; flex-wrap: wrap; gap: 5px; }
+    .mock-tag {
+      font-size: 10.5px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--line);
+      color: var(--grey-700);
+      font-weight: 500;
+    }
+    .mock-tag.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    /* Workflow mock */
+    .mock-flow .flow-tabs {
+      display: flex; gap: 4px;
+      background: #fff;
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      margin-bottom: 12px;
+    }
+    .mock-flow .flow-tab {
+      flex: 1;
+      text-align: center;
+      padding: 6px 4px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      border-radius: 6px;
+    }
+    .mock-flow .flow-tab.active { background: var(--ink); color: #fff; font-weight: 600; }
+    .mock-flow .flow-row {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 0;
+      border-top: 1px solid var(--line-2);
+      font-size: 11.5px;
+      color: var(--ink);
+    }
+    .mock-flow .flow-row .ic { width: 18px; height: 18px; color: var(--accent); }
+    .mock-flow .flow-row .stat { margin-left: auto; font-weight: 600; color: var(--success); font-size: 11px; }
+    /* Trust mock */
+    .mock-trust .trust-stat {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+    .mock-trust .trust-stat .ic {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: var(--success-soft); color: var(--success);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mock-trust .trust-stat .ic svg { width: 14px; height: 14px; }
+    .mock-trust .trust-stat .info { display: flex; flex-direction: column; }
+    .mock-trust .trust-stat .lbl { font-size: 10px; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
+    .mock-trust .trust-stat .val { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+    .mock-trust .trust-stat .amt { margin-left: auto; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--ink); }
+
+    /* ============================================================
+       SLIDE 7 — Market Size
+    ============================================================ */
+    .market .slide-inner {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .market-viz {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1.05;
+      max-width: 680px;
+    }
+    .tam-box {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent-soft) 0%, #F7FBFF 100%);
+      border: 2px solid var(--accent);
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+    }
+    .tam-box .lbl {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .tam-box .val {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(28px, 3vw, 44px);
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin-top: 4px;
+    }
+    .sam-box {
+      position: absolute;
+      top: 22%; left: 12%; right: 12%; bottom: 12%;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-600) 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 32px rgba(11,95,224,0.20);
+    }
+    .sam-box .lbl { color: rgba(255,255,255,0.85); }
+    .sam-box .val { color: #fff; }
+    .som-box {
+      position: absolute;
+      top: 42%; left: 22%; right: 22%; bottom: 22%;
+      background: var(--amber);
+      color: var(--ink);
+      border-radius: 12px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 12px 28px rgba(255,180,0,0.32);
+    }
+    .som-box .lbl { color: rgba(15,23,42,0.7); }
+    .som-box .val { color: var(--ink); font-size: clamp(22px, 2.4vw, 36px); }
+    .market .note-card {
+      background: var(--ink);
+      color: #fff;
+      border-radius: 18px;
+      padding: 28px 30px;
+      margin-top: 24px;
+    }
+    .market .note-card .note-lead {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(20px, 1.6vw, 26px);
+      letter-spacing: -0.015em;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .market .note-card .note-lead strong { color: var(--amber); }
+    .market .note-card .note-detail {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.55;
+      margin: 0;
+    }
+    .market .bench-row {
+      display: flex; gap: 14px; margin-top: 18px;
+    }
+    .market .bench {
+      flex: 1;
+      background: rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .market .bench .bn { font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 1px; text-transform: uppercase; }
+    .market .bench .bv { font-family: var(--font-display); font-weight: 700; font-size: 15px; margin-top: 4px; }
+
+    /* ============================================================
+       SLIDE 8 — Business Model
+    ============================================================ */
+    .biz-model { background: #fff; }
+    .rev-table {
+      flex: 1;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(15,23,42,0.06);
+    }
+    .rev-row {
+      display: grid;
+      grid-template-columns: 1.4fr 0.9fr 0.7fr 1fr;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--line);
+    }
+    .rev-row.head {
+      background: var(--ink);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 14px 28px;
+    }
+    .rev-row:last-child { border-bottom: none; }
+    .rev-row .stream {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .rev-row .stream strong {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(15px, 1.15vw, 17px);
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .rev-row .stream span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .rev-row .rate {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(14px, 1.1vw, 16px);
+      color: var(--ink);
+    }
+    .rev-row .share-num {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(18px, 1.4vw, 22px);
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+    .rev-row .share-bar {
+      height: 10px;
+      background: var(--grey-100);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .rev-row .share-bar::after {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: var(--w, 50%);
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-600) 100%);
+      border-radius: 999px;
+    }
+    .biz-model .blended-stat {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+    .biz-model .bs {
+      background: var(--grey-50);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px 22px;
+      text-align: center;
+    }
+    .biz-model .bs.hi {
+      background: linear-gradient(135deg, var(--ink) 0%, #1E3A8A 100%);
+      color: #fff;
+      border: none;
+    }
+    .biz-model .bs .lbl {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .biz-model .bs.hi .lbl { color: rgba(255,255,255,0.5); }
+    .biz-model .bs .val {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(28px, 2.6vw, 40px);
+      letter-spacing: -0.025em;
+      margin-top: 4px;
+      color: var(--ink);
+    }
+    .biz-model .bs.hi .val { color: var(--amber); }
+    .biz-model .bs .sub {
+      font-size: 12px; color: var(--muted); margin-top: 4px;
+    }
+    .biz-model .bs.hi .sub { color: rgba(255,255,255,0.7); }
+
+    /* ============================================================
+       SLIDE 9 — Unit Economics
+    ============================================================ */
+    .unit-econ { background: var(--ink-deep); color: #fff; }
+    .unit-econ .stat-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+    .stat-tile {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 28px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-tile .lbl {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .stat-tile .val {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(36px, 4vw, 56px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: #fff;
+    }
+    .stat-tile .sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      margin-top: auto;
+    }
+    .stat-tile.hi {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-600) 100%);
+      border-color: transparent;
+    }
+    .stat-tile.hi-amber {
+      background: linear-gradient(135deg, var(--amber) 0%, #B45309 100%);
+      border-color: transparent;
+      color: var(--ink);
+    }
+    .stat-tile.hi .lbl { color: rgba(255,255,255,0.7); }
+    .stat-tile.hi-amber .lbl { color: rgba(15,23,42,0.7); }
+    .stat-tile.hi-amber .val { color: var(--ink); }
+    .stat-tile .split {
+      display: flex; gap: 16px;
+    }
+    .stat-tile .split .s-item {
+      flex: 1;
+    }
+    .stat-tile .split .s-lbl {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .stat-tile .split .s-val {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(18px, 1.5vw, 24px);
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-top: 2px;
+    }
+    .unit-econ .closing-strip {
+      margin-top: 18px;
+      padding: 18px 22px;
+      background: rgba(255,180,0,0.10);
+      border: 1px solid rgba(255,180,0,0.25);
+      border-radius: 12px;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(15px, 1.15vw, 18px);
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+    .unit-econ .closing-strip strong { color: var(--amber); }
+
+    /* ============================================================
+       SLIDE 10 — Go-to-Market
+    ============================================================ */
+    .gtm { background: var(--grey-50); }
+    .gtm-hero-img {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 30vh;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .gtm-hero-img::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(15,23,42,0.30) 0%, rgba(248,250,252,0.10) 50%, var(--grey-50) 100%);
+    }
+    .gtm .slide-inner {
+      padding-top: 25vh;
+      position: relative;
+      z-index: 2;
+    }
+    .gtm .slide-inner .eyebrow {
+      color: #fff;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    .gtm .slide-inner .eyebrow::before { background: var(--amber); }
+    .gtm h1.slide-title {
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+      margin-bottom: 14px;
+    }
+    .gtm-timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      flex: 1;
+      align-items: stretch;
+      margin-top: 24px;
+    }
+    .wave-step {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 24px 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+    }
+    .wave-step::before {
+      content: "";
+      position: absolute;
+      top: -10px; left: 30px;
+      width: 38px; height: 4px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+    .wave-step:nth-child(2)::before { background: var(--amber); }
+    .wave-step:nth-child(3)::before { background: var(--success); }
+    .wave-step .wave-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .wave-step:nth-child(2) .wave-label { color: #B45309; }
+    .wave-step:nth-child(3) .wave-label { color: var(--success); }
+    .wave-step .wave-month {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(15px, 1.15vw, 17px);
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .wave-step h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(20px, 1.6vw, 26px);
+      letter-spacing: -0.018em;
+      margin: 0;
+      line-height: 1.15;
+    }
+    .wave-step ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .wave-step ul li {
+      font-size: 14px;
+      color: var(--grey-700);
+      line-height: 1.5;
+      padding-left: 22px;
+      position: relative;
+    }
+    .wave-step ul li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 8px;
+      width: 12px; height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+    }
+    .wave-step:nth-child(2) ul li::before { background: var(--amber); }
+    .wave-step:nth-child(3) ul li::before { background: var(--success); }
+
+    /* ============================================================
+       SLIDE 11 — Competition
+    ============================================================ */
+    .competition { background: #fff; }
+    .competition .slide-inner {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 50px;
+      align-items: stretch;
+    }
+    .comp-matrix {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      max-width: 640px;
+      background:
+        linear-gradient(135deg, rgba(11,95,224,0.04) 0%, rgba(255,180,0,0.04) 100%),
+        #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 26px;
+      box-shadow: 0 8px 28px rgba(15,23,42,0.05);
+    }
+    .comp-matrix .axis-y, .comp-matrix .axis-x {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .comp-matrix .axis-y { left: 8px; top: 50%; transform: rotate(-90deg) translateX(50%); transform-origin: left center; }
+    .comp-matrix .axis-x { bottom: 8px; left: 50%; transform: translateX(-50%); }
+    .comp-matrix .axis-arrow-y {
+      position: absolute;
+      left: 20px; top: 26px; bottom: 26px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--ink) 0%, var(--line) 100%);
+    }
+    .comp-matrix .axis-arrow-y::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -5px;
+      width: 0; height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 8px solid var(--ink);
+    }
+    .comp-matrix .axis-arrow-x {
+      position: absolute;
+      bottom: 20px; left: 26px; right: 26px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--line) 0%, var(--ink) 100%);
+    }
+    .comp-matrix .axis-arrow-x::after {
+      content: "";
+      position: absolute;
+      right: 0; top: -5px;
+      width: 0; height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 8px solid var(--ink);
+    }
+    .comp-matrix .grid-line {
+      position: absolute;
+      background: var(--line);
+    }
+    .comp-matrix .grid-line.h { left: 30px; right: 30px; top: 50%; height: 1px; }
+    .comp-matrix .grid-line.v { top: 30px; bottom: 30px; left: 50%; width: 1px; }
+    .comp-dot {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px 6px 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--grey-700);
+      box-shadow: 0 4px 12px rgba(15,23,42,0.08);
+      white-space: nowrap;
+    }
+    .comp-dot .d {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--grey-700);
+    }
+    .comp-dot.hero {
+      background: var(--ink);
+      color: #fff;
+      border: 2px solid var(--amber);
+      padding: 8px 16px 8px 10px;
+      font-weight: 700;
+      box-shadow: 0 12px 28px rgba(255,180,0,0.30);
+    }
+    .comp-dot.hero .d { background: var(--amber); }
+    .comp-dot.hero::after {
+      content: "★";
+      position: absolute;
+      top: -8px; right: -8px;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--amber);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .comp-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+    .comp-side .diff-card {
+      background: var(--grey-50);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 22px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .comp-side .diff-num {
+      width: 36px; height: 36px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .comp-side .diff-card:nth-child(2) .diff-num { background: var(--amber); color: var(--ink); }
+    .comp-side .diff-card:nth-child(3) .diff-num { background: var(--success); }
+    .comp-side h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(15px, 1.2vw, 18px);
+      letter-spacing: -0.013em;
+      margin: 0 0 4px;
+      line-height: 1.2;
+    }
+    .comp-side p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ============================================================
+       SLIDE 12 — Team
+    ============================================================ */
+    .team { background: var(--grey-50); }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      flex: 1;
+    }
+    .founder-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.05);
+      transition: transform 0.2s;
+    }
+    .founder-card:hover { transform: translateY(-3px); }
+    .founder-card .portrait {
+      aspect-ratio: 1;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--grey-100);
+    }
+    .founder-card .body {
+      padding: 20px 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .founder-card .role {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .founder-card h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(17px, 1.3vw, 20px);
+      letter-spacing: -0.015em;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .founder-card .bg-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 6px 0 0;
+    }
+    .team .advisor-strip {
+      margin-top: 18px;
+      padding: 22px 28px;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .team .advisor-strip .ad-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 700;
+    }
+    .team .advisor-strip .ad-item {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+      padding-left: 18px;
+      border-left: 1px solid rgba(255,255,255,0.15);
+    }
+    .team .advisor-strip .ad-item:first-of-type { border-left: none; padding-left: 0; }
+
+    /* ============================================================
+       SLIDE 13 — Roadmap
+    ============================================================ */
+    .roadmap { background: #fff; }
+    .roadmap-timeline {
+      flex: 1;
+      position: relative;
+      padding: 40px 0 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .roadmap-track {
+      position: relative;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--amber) 100%);
+      border-radius: 999px;
+      margin: 60px 30px;
+    }
+    .roadmap-stops {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0;
+    }
+    .road-stop {
+      position: relative;
+      text-align: center;
+      padding: 0 6px;
+    }
+    .road-stop .stop-dot {
+      width: 18px; height: 18px;
+      background: #fff;
+      border: 3px solid var(--accent);
+      border-radius: 50%;
+      margin: -11px auto 14px;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(11,95,224,0.2);
+    }
+    .road-stop:nth-child(2) .stop-dot { border-color: #2E73CF; }
+    .road-stop:nth-child(3) .stop-dot { border-color: #5286BE; }
+    .road-stop:nth-child(4) .stop-dot { border-color: #C29F4F; }
+    .road-stop:nth-child(5) .stop-dot { border-color: #E2A625; }
+    .road-stop:nth-child(6) .stop-dot { border-color: var(--amber); background: var(--amber); box-shadow: 0 4px 16px rgba(255,180,0,0.5); }
+    .road-stop .quarter {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .road-stop:last-child .quarter { color: #B45309; }
+    .road-stop h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(15px, 1.15vw, 18px);
+      letter-spacing: -0.015em;
+      margin: 6px 0 8px;
+      line-height: 1.25;
+      color: var(--ink);
+    }
+    .road-stop p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.45;
+    }
+    .road-stop.highlight {
+      background: var(--amber-soft);
+      border: 1px solid #FDE68A;
+      border-radius: 14px;
+      padding: 12px 10px 16px;
+      margin: -4px -8px 0;
+    }
+    .road-stop.above .quarter { display: block; }
+    /* alternating top/bottom layout */
+    .roadmap-stops {
+      align-items: start;
+    }
+    .road-stop {
+      padding-top: 20px;
+    }
+    .road-stop.below {
+      padding-top: 60px;
+    }
+    .road-stop.below .stop-dot {
+      margin-top: -77px;
+    }
+    .road-stop.below .quarter,
+    .road-stop.below h3,
+    .road-stop.below p {
+      margin-top: 0;
+    }
+    .roadmap .series-a-badge {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--ink) 0%, #1E3A8A 100%);
+      color: #fff;
+      padding: 16px 24px;
+      border-radius: 14px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+      margin-top: 12px;
+    }
+    .roadmap .series-a-badge strong { color: var(--amber); }
+
+    /* ============================================================
+       SLIDE 14 — The Ask
+    ============================================================ */
+    .the-ask { background: var(--ink-deep); color: #fff; }
+    .the-ask .slide-inner {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 50px;
+      align-items: center;
+    }
+    .ask-main h1 {
+      font-size: clamp(48px, 6vw, 96px);
+      color: #fff;
+      line-height: 1;
+      margin: 8px 0 18px;
+    }
+    .ask-main h1 strong { color: var(--amber); }
+    .ask-main .rp-eq {
+      font-family: var(--font-display);
+      font-size: clamp(18px, 1.5vw, 24px);
+      font-weight: 500;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: -0.015em;
+      margin-bottom: 28px;
+    }
+    .ask-main .milestone-block {
+      padding: 22px 24px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 14px;
+    }
+    .ask-main .milestone-block .m-lbl {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .ask-main .milestone-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 18px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+    }
+    .ask-main .milestone-list .mi {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ask-main .milestone-list .mi svg { width: 14px; height: 14px; color: var(--success); }
+    .ask-side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    .donut-wrap {
+      position: relative;
+      width: clamp(280px, 28vw, 380px);
+      height: clamp(280px, 28vw, 380px);
+    }
+    .donut-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .donut-center {
+      position: absolute;
+      inset: 28%;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .donut-center .ttl {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .donut-center .amt {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(22px, 2vw, 30px);
+      letter-spacing: -0.02em;
+      color: #fff;
+      line-height: 1;
+      margin-top: 4px;
+    }
+    .legend-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 18px;
+      font-size: 13px;
+    }
+    .legend-row .li {
+      display: flex; align-items: center; gap: 10px;
+      color: rgba(255,255,255,0.8);
+    }
+    .legend-row .li .sq {
+      width: 12px; height: 12px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .legend-row .li .pc {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: #fff;
+      margin-left: auto;
+      letter-spacing: -0.01em;
+    }
+
+    /* ============================================================
+       SLIDE 15 — Why Us
+    ============================================================ */
+    .why-us { background: var(--grey-50); }
+    .why-us .reasons {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+    .reason-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 32px 28px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(15,23,42,0.05);
+    }
+    .reason-card .big-num {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(72px, 7vw, 120px);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      color: var(--accent);
+      opacity: 0.18;
+      position: absolute;
+      top: -20px; right: -10px;
+      pointer-events: none;
+    }
+    .reason-card:nth-child(2) .big-num { color: var(--amber); opacity: 0.25; }
+    .reason-card:nth-child(3) .big-num { color: var(--success); opacity: 0.22; }
+    .reason-card .small-num {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 2.2px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .reason-card:nth-child(2) .small-num { color: #B45309; }
+    .reason-card:nth-child(3) .small-num { color: var(--success); }
+    .reason-card h3 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(22px, 1.7vw, 28px);
+      letter-spacing: -0.02em;
+      margin: 0;
+      line-height: 1.15;
+      color: var(--ink);
+      position: relative;
+      z-index: 2;
+    }
+    .reason-card p {
+      font-size: 14.5px;
+      color: var(--grey-700);
+      line-height: 1.55;
+      margin: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .reason-card .kicker {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ============================================================
+       SLIDE 16 — Closing
+    ============================================================ */
+    .closing {
+      background:
+        radial-gradient(50% 50% at 50% 50%, rgba(11,95,224,0.20) 0%, transparent 60%),
+        radial-gradient(40% 50% at 80% 20%, rgba(255,180,0,0.15) 0%, transparent 60%),
+        var(--ink-deep);
+      color: #fff;
+      align-items: center;
+      justify-content: center;
+    }
+    .closing .slide-inner {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 8vw;
+      gap: 0;
+    }
+    .closing .quote-1 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(28px, 3.4vw, 52px);
+      letter-spacing: -0.025em;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.2;
+      margin: 0;
+    }
+    .closing .quote-2 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(40px, 5.4vw, 80px);
+      letter-spacing: -0.035em;
+      color: #fff;
+      line-height: 1.05;
+      max-width: 1100px;
+      margin: 22px 0 56px;
+    }
+    .closing .quote-2 strong { color: var(--amber); font-weight: 800; }
+    .closing .footer-mark {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .closing .mark-line {
+      display: flex; align-items: center; gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .closing .mark-line .sep {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+    .closing .brand-mark {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(28px, 2.6vw, 38px);
+      letter-spacing: -0.02em;
+      color: #fff;
+      position: relative;
+      padding-bottom: 14px;
+    }
+    .closing .brand-mark::after {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 64px; height: 4px;
+      background: var(--amber);
+      border-radius: 999px;
+    }
+    .closing .accent-shape {
+      position: absolute;
+      bottom: -120px; left: -120px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,180,0,0.10), transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ============================================================
+       Demo drawer (matches existing pages)
+    ============================================================ */
+    .demo-drawer {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: 360px;
+      background: #fff;
+      box-shadow: -20px 0 60px rgba(15,23,42,0.18);
+      z-index: 10000;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      font-family: var(--font-body);
+      color: var(--ink);
+    }
+    .demo-drawer.open { transform: translateX(0); }
+    .demo-drawer-head {
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .demo-drawer-head strong {
+      font-family: var(--font-display);
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+    .demo-drawer-head p {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 4px 0 0;
+    }
+    .demo-close {
+      background: none;
+      border: none;
+      font-size: 26px;
+      cursor: pointer;
+      color: var(--muted);
+      line-height: 1;
+      padding: 0 4px;
+      margin-left: auto;
+    }
+    .demo-close:hover { color: var(--ink); }
+    .demo-drawer-body { padding: 18px 16px 32px; overflow-y: auto; }
+    .demo-group { margin-bottom: 22px; }
+    .demo-group-label {
+      font-size: 10px;
+      letter-spacing: 1.4px;
+      color: var(--muted-2);
+      font-weight: 700;
+      padding: 0 8px 8px;
+      text-transform: uppercase;
+    }
+    .demo-group a {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      color: var(--grey-700);
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .demo-group a:hover { background: var(--grey-100); color: var(--ink); }
+    .demo-group a.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .demo-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.4);
+      z-index: 9998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .demo-backdrop.open { opacity: 1; pointer-events: auto; }
+
+    /* ============================================================
+       Print styles — Cmd+P to save as PDF
+    ============================================================ */
+    @media print {
+      @page { size: 1280px 720px; margin: 0; }
+      html, body { overflow: visible !important; background: #fff; }
+      .deck-nav, .deck-corner, .demo-drawer, .demo-backdrop { display: none !important; }
+      .deck { position: static; width: 100%; height: auto; overflow: visible; }
+      .slide {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: 720px;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        page-break-after: always;
+        break-after: page;
+        display: flex !important;
+        overflow: hidden;
+      }
+      .slide:last-child { page-break-after: auto; }
+    }
+
+    /* Smaller screens — keep usable down to laptop */
+    @media (max-height: 720px) {
+      .slide-inner { padding: 4vh 5vw; gap: 1.8vh; }
+    }
+    @media (max-width: 960px) {
+      .problem .slide-inner,
+      .market .slide-inner,
+      .competition .slide-inner,
+      .the-ask .slide-inner { grid-template-columns: 1fr; gap: 24px; }
+      .why-now .col-3, .product-grid, .gtm-timeline, .why-us .reasons { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .compare-table { grid-template-columns: 1fr; }
+      .compare-col.left { border-right: none; border-bottom: 1px solid var(--line); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     SVG sprite (icons)
+============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/><line x1="20" y1="9" x2="22" y2="9"/><line x1="20" y1="14" x2="22" y2="14"/><line x1="2" y1="9" x2="4" y2="9"/><line x1="2" y1="14" x2="4" y2="14"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 4 14 12 14 11 22 20 10 12 10 13 2"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.3 3.86-8.16 14a2 2 0 0 0 1.73 3h16.32a2 2 0 0 0 1.73-3l-8.16-14a2 2 0 0 0-3.46 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="2" y1="2" x2="22" y2="22"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-split" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-trend-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============================================================
+     Top-right corner: Demo drawer toggle
+============================================================ -->
+<div class="deck-corner">
+  <button class="corner-btn" id="demoToggle" title="Indeks halaman demo (Esc)">
+    <svg><use href="#i-menu"/></svg>
+    <span>Demo · 47 halaman</span>
+  </button>
+</div>
+
+<!-- ============================================================
+     SLIDES
+============================================================ -->
+<main class="deck" id="deck">
+
+  <!-- ===== Slide 1 — Cover ===== -->
+  <section class="slide cover active" data-slide="1">
+    <div class="corner-mark">RESONANSI · PITCH DECK V1.0</div>
+    <div class="corner-mark-right">2026-05-26</div>
+    <div class="slide-inner">
+      <div class="cover-grid">
+        <div>
+          <div class="wordmark">Resonansi</div>
+          <div class="tagline">Suara Anda, Dampak Nyata.</div>
+          <p class="sub">Marketplace Brand Advocate Terverifikasi #1 di Indonesia — infrastructure for accountable influence.</p>
+          <div class="meta"><span class="dot"></span>Pre-Seed Round · Indonesia · 2026</div>
+        </div>
+        <div class="cover-art">
+          <svg viewBox="0 0 500 500" fill="none">
+            <defs>
+              <radialGradient id="cgrad1" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFB400" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#FFB400" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="cgrad2" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#0B5FE0" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#0B5FE0" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="ring1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFB400"/>
+                <stop offset="100%" stop-color="#0B5FE0"/>
+              </linearGradient>
+            </defs>
+            <!-- Soft glow circles -->
+            <circle cx="250" cy="250" r="240" fill="url(#cgrad1)"/>
+            <circle cx="130" cy="370" r="170" fill="url(#cgrad2)"/>
+
+            <!-- Concentric rings (sound wave) -->
+            <circle cx="250" cy="250" r="60" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+            <circle cx="250" cy="250" r="100" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+            <circle cx="250" cy="250" r="140" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+            <circle cx="250" cy="250" r="180" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+            <circle cx="250" cy="250" r="220" stroke="rgba(255,255,255,0.07)" stroke-width="1.5"/>
+
+            <!-- Center dot -->
+            <circle cx="250" cy="250" r="14" fill="#FFB400"/>
+            <circle cx="250" cy="250" r="22" fill="none" stroke="#FFB400" stroke-width="2" opacity="0.6"/>
+
+            <!-- Floating particles -->
+            <circle cx="120" cy="180" r="4" fill="#FFB400" opacity="0.9"/>
+            <circle cx="380" cy="150" r="3" fill="#FFFFFF" opacity="0.7"/>
+            <circle cx="410" cy="320" r="5" fill="#0B5FE0" opacity="0.9"/>
+            <circle cx="100" cy="290" r="3" fill="#FFFFFF" opacity="0.5"/>
+            <circle cx="340" cy="400" r="4" fill="#FFB400" opacity="0.6"/>
+            <circle cx="180" cy="420" r="3" fill="#FFFFFF" opacity="0.4"/>
+            <circle cx="60" cy="220" r="2" fill="#FFFFFF" opacity="0.6"/>
+            <circle cx="440" cy="200" r="2" fill="#FFFFFF" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="corner-bottom">
+      <span>FOUNDERS@RESONANSI.ID</span>
+      <span>SLIDE 01 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 2 — Problem ===== -->
+  <section class="slide problem" data-slide="2">
+    <div class="slide-inner">
+      <div class="text-col">
+        <div class="eyebrow">Problem</div>
+        <div class="big-stat">Indonesia menghabiskan <strong>Rp 28 Triliun</strong>/tahun untuk influence campaigns.</div>
+        <p class="lead">Tapi market-nya masih fragmented, untracked, dan high-risk.</p>
+
+        <div class="bullet-grid">
+          <div class="bullet-card">
+            <div class="ico-box"><svg><use href="#i-split"/></svg></div>
+            <div>
+              <strong>Fragmented</strong>
+              <p>Agency manual, WhatsApp group, broker offline. Tidak ada single source.</p>
+            </div>
+          </div>
+          <div class="bullet-card">
+            <div class="ico-box"><svg><use href="#i-eye-off"/></svg></div>
+            <div>
+              <strong>Untracked</strong>
+              <p>Tidak ada attribution. Mudah ditipu engagement palsu &amp; bot.</p>
+            </div>
+          </div>
+          <div class="bullet-card">
+            <div class="ico-box"><svg><use href="#i-alert"/></svg></div>
+            <div>
+              <strong>High-risk</strong>
+              <p>Kata "buzzer" identik dengan disinformasi &amp; SARA — toxic untuk brand tier-1.</p>
+            </div>
+          </div>
+          <div class="bullet-card">
+            <div class="ico-box"><svg><use href="#i-clock"/></svg></div>
+            <div>
+              <strong>Slow</strong>
+              <p>Film turun layar 7 hari. Brief-to-publish butuh 2 minggu. Tidak match.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="closing">
+          Klien tier-1 (Disney, Falcon, partai besar, kementerian) <strong>tidak bisa beli</strong> dengan compliance &amp; speed yang mereka butuhkan.
+        </div>
+      </div>
+      <div class="image-col">
+        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&q=80&auto=format&fit=crop" alt="Crowd at event">
+        <div class="image-tag">Indonesia · 280M audience · 87% mobile-first</div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num">02 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 3 — Why Now ===== -->
+  <section class="slide why-now" data-slide="3">
+    <div class="slide-inner">
+      <div class="eyebrow">Why Now</div>
+      <h1 class="slide-title">Tiga gelombang besar sedang bertabrakan.</h1>
+      <p class="lead">Window 18 bulan sebelum kompetitor besar masuk — kombinasi unik regulasi, politik, &amp; recovery hiburan.</p>
+
+      <div class="col-3">
+        <div class="wave-card">
+          <div class="wave-img" style="background-image: url('https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=1600&q=80&auto=format&fit=crop')">
+            <div class="wave-num">1</div>
+          </div>
+          <div class="wave-body">
+            <h3>Pilkada 2027 + Pemilu 2029</h3>
+            <p>Belanja kampanye terstruktur naik tajam. Tim sukses butuh platform akuntabel, bukan WhatsApp group.</p>
+            <div class="wave-impact">+40% YoY belanja kampanye</div>
+          </div>
+        </div>
+
+        <div class="wave-card">
+          <div class="wave-img" style="background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&q=80&auto=format&fit=crop')">
+            <div class="wave-num">2</div>
+          </div>
+          <div class="wave-body">
+            <h3>Regulasi PKPU &amp; Bawaslu makin ketat</h3>
+            <p>Auto-disclosure jadi wajib. Klien butuh platform yang compliance-ready by default — bukan workaround.</p>
+            <div class="wave-impact">Compliance moat untuk first-mover</div>
+          </div>
+        </div>
+
+        <div class="wave-card">
+          <div class="wave-img" style="background-image: url('https://images.unsplash.com/photo-1489599735188-7d76b3a1de7f?w=1600&q=80&auto=format&fit=crop')">
+            <div class="wave-num">3</div>
+          </div>
+          <div class="wave-body">
+            <h3>Bioskop pasca-COVID</h3>
+            <p>Tekanan okupansi tinggi. Studio &amp; streamer lokal butuh promosi cepat &amp; terukur per judul.</p>
+            <div class="wave-impact">Marketing-as-a-service per film</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="closing-strip">
+        <span class="badge">Window</span>
+        <span><strong style="color:var(--amber)">18 bulan</strong> sebelum incumbent &amp; platform asing besar masuk vertikal Indonesia.</span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num">03 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 4 — Solution ===== -->
+  <section class="slide solution" data-slide="4">
+    <div class="slide-inner">
+      <div class="eyebrow">Solution</div>
+      <h1 class="slide-title"><span class="accent">Resonansi</span> adalah marketplace dua-sisi yang elegan.</h1>
+
+      <div class="marketplace-diagram">
+        <!-- Supply -->
+        <div class="side-card supply">
+          <div class="side-label">Supply Side</div>
+          <div class="side-ico"><svg><use href="#i-users"/></svg></div>
+          <h3>Brand Advocate</h3>
+          <p class="desc">Verified · Tier 1–5 · CV-profiled · Community-rooted</p>
+          <div class="tag-row">
+            <span class="tag">KYC</span>
+            <span class="tag">Biometrik</span>
+            <span class="tag">Tier 4–5</span>
+          </div>
+        </div>
+
+        <!-- Core -->
+        <div class="matching-core">
+          <div class="core-label">Matching Engine</div>
+          <div class="core-ico"><svg><use href="#i-cpu"/></svg></div>
+          <h3>AI-Powered Match</h3>
+          <p class="core-desc">Semantic CV match · audience overlap · sentiment guardrails · rate optimizer</p>
+          <div class="core-meta">
+            <span class="meta-pill">Anti-bot AI</span>
+            <span class="meta-pill">PKPU compliant</span>
+            <span class="meta-pill">Real-time</span>
+          </div>
+        </div>
+
+        <!-- Demand -->
+        <div class="side-card demand">
+          <div class="side-label">Demand Side</div>
+          <div class="side-ico"><svg><use href="#i-target"/></svg></div>
+          <h3>Campaign Owner</h3>
+          <p class="desc">Film · Politik · Brand · NGO — tier-1 enterprise</p>
+          <div class="tag-row">
+            <span class="tag">Disney</span>
+            <span class="tag">Falcon</span>
+            <span class="tag">Tim sukses</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="escrow-band">
+        <span class="ico"><svg width="16" height="16"><use href="#i-lock"/></svg></span>
+        <span>Trust Layer: Escrow Midtrans/Xendit · Auto-disclosure · Tax withholding · Proof-of-work</span>
+      </div>
+
+      <div class="reframe-line"><strong>Bukan platform buzzer.</strong> Ini <em>infrastructure for accountable influence</em>.</div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num">04 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 5 — Reframe ===== -->
+  <section class="slide reframe" data-slide="5">
+    <div class="slide-inner">
+      <div class="eyebrow">Positioning</div>
+      <h1 class="slide-title">Mengapa kami <span style="text-decoration:underline; text-decoration-color:var(--accent); text-decoration-thickness:6px; text-underline-offset:8px;">bukan</span> platform buzzer.</h1>
+      <p class="lead">Setiap atribut yang membuat "buzzer" toxic, kami balik 180° — sehingga klien tier-1 mau beli.</p>
+
+      <div class="compare-table">
+        <div class="compare-col left">
+          <div class="compare-head">
+            <span class="ico"><svg width="16" height="16"><use href="#i-x"/></svg></span>
+            Buzzer Lama
+          </div>
+          <div class="compare-row"><span class="bullet"><svg><use href="#i-x"/></svg></span>Akun anonim tanpa identitas</div>
+          <div class="compare-row"><span class="bullet"><svg><use href="#i-x"/></svg></span>Engagement bot &amp; manipulasi</div>
+          <div class="compare-row"><span class="bullet"><svg><use href="#i-x"/></svg></span>Tanpa disclosure ke audience</div>
+          <div class="compare-row"><span class="bullet"><svg><use href="#i-x"/></svg></span>Black-box pricing, broker WA</div>
+          <div class="compare-row"><span class="bullet"><svg><use href="#i-x"/></svg></span>Operasional taktis, ad-hoc</div>
+        </div>
+        <div class="compare-col right">
+          <div class="compare-head">
+            <span class="ico"><svg width="16" height="16"><use href="#i-check"/></svg></span>
+            Resonansi
+          </div>
+          <div class="compare-row"><span class="bullet"><svg><use href="#i-check"/></svg></span>KYC + biometrik wajib</div>
+          <div class="compare-row"><span class="bullet"><svg><use href="#i-check"/></svg></span>Anti-bot AI + verified reach</div>
+          <div class="compare-row"><span class="bullet"><svg><use href="#i-check"/></svg></span>Auto-disclosure (PKPU compliant)</div>
+          <div class="compare-row"><span class="bullet"><svg><use href="#i-check"/></svg></span>Rate card publik &amp; escrow transparan</div>
+          <div class="compare-row"><span class="bullet"><svg><use href="#i-check"/></svg></span>Strategis, terukur, repeatable</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num">05 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 6 — Product ===== -->
+  <section class="slide product" data-slide="6">
+    <div class="slide-inner">
+      <div class="eyebrow">Product</div>
+      <h1 class="slide-title">Tiga modul inti yang sudah didesain.</h1>
+      <p class="lead">32 halaman wireframe production-ready · matching engine spec · trust layer arsitektur. Dapat di-demokan live.</p>
+
+      <div class="product-grid">
+        <!-- Module 1 -->
+        <div class="product-card">
+          <div class="module-num">MODUL 01</div>
+          <h3>CV-based Profiling Engine</h3>
+          <p>Upload CV → AI ekstrak niche, demografi audiens, lokasi, bahasa. Tier 4–5 (community lead, citizen advocate) yang tidak terjangkau platform lain.</p>
+          <div class="product-mock mock-cv">
+            <div class="mock-upload">
+              <div class="ic"><svg width="16" height="16"><use href="#i-upload"/></svg></div>
+              <div class="lbl">cv_sari_wijaya.pdf · diekstrak</div>
+            </div>
+            <div class="mock-tag-row">
+              <span class="mock-tag active">Niche: fashion</span>
+              <span class="mock-tag active">Bandung</span>
+              <span class="mock-tag">Tier 3</span>
+              <span class="mock-tag">15K reach</span>
+              <span class="mock-tag">ID + EN</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 2 -->
+        <div class="product-card">
+          <div class="module-num">MODUL 02</div>
+          <h3>Vertical Campaign Workflow</h3>
+          <p>Film mode (24-jam mobilisasi), Politik mode (compliance Bawaslu built-in), Brand mode (standard), NGO mode (cause-driven). Setiap vertikal punya brief, pricing &amp; KPI berbeda.</p>
+          <div class="product-mock mock-flow">
+            <div class="flow-tabs">
+              <div class="flow-tab active">Film</div>
+              <div class="flow-tab">Politik</div>
+              <div class="flow-tab">Brand</div>
+              <div class="flow-tab">NGO</div>
+            </div>
+            <div class="flow-row">
+              <svg class="ic"><use href="#i-zap"/></svg>
+              <span>Brief 24-jam mobilisasi</span>
+              <span class="stat">8 menit</span>
+            </div>
+            <div class="flow-row">
+              <svg class="ic"><use href="#i-users"/></svg>
+              <span>Auto-shortlist 12 advocate</span>
+              <span class="stat">Live</span>
+            </div>
+            <div class="flow-row">
+              <svg class="ic"><use href="#i-trend-up"/></svg>
+              <span>Live tracking reach</span>
+              <span class="stat">+184%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 3 -->
+        <div class="product-card">
+          <div class="module-num">MODUL 03</div>
+          <h3>Trust &amp; Settlement Layer</h3>
+          <p>Escrow Midtrans/Xendit, proof-of-work verification, tax withholding otomatis (PPh 21/23), e-Faktur ready. Audit trail untuk semua transaksi.</p>
+          <div class="product-mock mock-trust">
+            <div class="trust-stat">
+              <div class="ic"><svg><use href="#i-lock"/></svg></div>
+              <div class="info">
+                <span class="lbl">Escrow Lock</span>
+                <span class="val">CMP-0482 · Falcon</span>
+              </div>
+              <span class="amt">Rp 12.4 jt</span>
+            </div>
+            <div class="trust-stat">
+              <div class="ic"><svg><use href="#i-check"/></svg></div>
+              <div class="info">
+                <span class="lbl">Proof-of-work</span>
+                <span class="val">Verified · 28 advocate</span>
+              </div>
+              <span class="amt">100%</span>
+            </div>
+            <div class="trust-stat">
+              <div class="ic"><svg><use href="#i-shield"/></svg></div>
+              <div class="info">
+                <span class="lbl">Tax withhold</span>
+                <span class="val">PPh 21 · auto</span>
+              </div>
+              <span class="amt">Rp 620k</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num">06 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 7 — Market Size ===== -->
+  <section class="slide market" data-slide="7">
+    <div class="slide-inner">
+      <div>
+        <div class="eyebrow">Market</div>
+        <h1 class="slide-title">TAM Indonesia<br>(influence + political comms).</h1>
+        <p class="lead" style="margin-top:18px;">Visualisasi nested — TAM → SAM → SOM. Target SOM Year 3 hanya 3% dari SAM.</p>
+
+        <div class="market-viz">
+          <div class="tam-box">
+            <span class="lbl">TAM</span>
+            <span class="val">Rp 28 Triliun</span>
+            <span style="font-size:13px; color:var(--muted); margin-top:6px;">Total addressable: influence + political comms</span>
+          </div>
+          <div class="sam-box">
+            <span class="lbl">SAM (Digital)</span>
+            <span class="val">Rp 6 Triliun</span>
+            <span style="font-size:12px; color:rgba(255,255,255,0.75); margin-top:4px;">Digital-only, addressable</span>
+          </div>
+          <div class="som-box">
+            <span class="lbl">SOM Y3</span>
+            <span class="val">Rp 180 M</span>
+            <span style="font-size:11px; color:rgba(15,23,42,0.65); margin-top:2px;">3% SAM target</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="note-card">
+          <div class="note-lead"><strong>Bottom-up</strong> · 3% SAM dalam 3 tahun. Realistis &amp; defensible.</div>
+          <p class="note-detail">Berdasarkan benchmark Sociabuzz (Rp 100M GMV historis) &amp; Partipost (USD 30M GMV regional). Plus vertical politik yang sebelumnya tidak tersentuh platform manapun.</p>
+          <div class="bench-row">
+            <div class="bench">
+              <div class="bn">Sociabuzz</div>
+              <div class="bv">Rp 100 M</div>
+            </div>
+            <div class="bench">
+              <div class="bn">Partipost</div>
+              <div class="bv">USD 30 M</div>
+            </div>
+            <div class="bench">
+              <div class="bn">Resonansi Y3</div>
+              <div class="bv" style="color:var(--amber)">Rp 180 M</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num">07 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 8 — Business Model ===== -->
+  <section class="slide biz-model" data-slide="8">
+    <div class="slide-inner">
+      <div class="eyebrow">Revenue Model</div>
+      <h1 class="slide-title">Revenue stack berlapis.</h1>
+      <p class="lead">Lima stream yang saling menguatkan — take rate sebagai dasar, subscription &amp; data sebagai margin expansion.</p>
+
+      <div class="rev-table">
+        <div class="rev-row head">
+          <span>Revenue Stream</span>
+          <span>Rate</span>
+          <span>% Y3</span>
+          <span>Distribusi</span>
+        </div>
+        <div class="rev-row">
+          <div class="stream">
+            <strong>Take Rate (transaction fee)</strong>
+            <span>Per campaign · default 14%</span>
+          </div>
+          <span class="rate">12–18%</span>
+          <span class="share-num">58%</span>
+          <div class="share-bar" style="--w: 100%"></div>
+        </div>
+        <div class="rev-row">
+          <div class="stream">
+            <strong>Subscription Pro (Client)</strong>
+            <span>SaaS untuk enterprise client</span>
+          </div>
+          <span class="rate">Rp 5–25 jt/bln</span>
+          <span class="share-num">18%</span>
+          <div class="share-bar" style="--w: 31%"></div>
+        </div>
+        <div class="rev-row">
+          <div class="stream">
+            <strong>Managed Service (white-glove)</strong>
+            <span>Full-service untuk tier-1</span>
+          </div>
+          <span class="rate">20–30% retainer</span>
+          <span class="share-num">14%</span>
+          <div class="share-bar" style="--w: 24%"></div>
+        </div>
+        <div class="rev-row">
+          <div class="stream">
+            <strong>Data Insight (agency, lembaga)</strong>
+            <span>B2B intelligence dashboard</span>
+          </div>
+          <span class="rate">Rp 30–80 jt/bln</span>
+          <span class="share-num">6%</span>
+          <div class="share-bar" style="--w: 10%"></div>
+        </div>
+        <div class="rev-row">
+          <div class="stream">
+            <strong>Verification &amp; Boost (Advocate)</strong>
+            <span>Premium profile featuring</span>
+          </div>
+          <span class="rate">Rp 25–150 rb</span>
+          <span class="share-num">4%</span>
+          <div class="share-bar" style="--w: 7%"></div>
+        </div>
+      </div>
+
+      <div class="blended-stat">
+        <div class="bs">
+          <div class="lbl">Fiverr (benchmark)</div>
+          <div class="val">~5%</div>
+          <div class="sub">terlalu rendah</div>
+        </div>
+        <div class="bs hi">
+          <div class="lbl">Resonansi blended</div>
+          <div class="val">14%</div>
+          <div class="sub">sweet spot vertical-grade</div>
+        </div>
+        <div class="bs">
+          <div class="lbl">Aspire (benchmark)</div>
+          <div class="val">~20%</div>
+          <div class="sub">terlalu agresif</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num">08 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 9 — Unit Economics ===== -->
+  <section class="slide unit-econ dark" data-slide="9">
+    <div class="slide-inner">
+      <div class="eyebrow">Unit Economics</div>
+      <h1 class="slide-title">Year 2 Projection.</h1>
+      <p class="lead">Konservatif — angka realistis berdasarkan benchmark Sociabuzz/Partipost &amp; bottom-up build dari 30 enterprise client.</p>
+
+      <div class="stat-grid">
+        <div class="stat-tile">
+          <span class="lbl">GMV</span>
+          <span class="val">Rp 120 M</span>
+          <span class="sub">Gross merchandise value · Y2</span>
+        </div>
+        <div class="stat-tile">
+          <span class="lbl">Revenue (blended 14%)</span>
+          <span class="val">Rp 16.8 M</span>
+          <span class="sub">Net take across 5 stream</span>
+        </div>
+        <div class="stat-tile">
+          <span class="lbl">Gross Margin</span>
+          <span class="val">65%</span>
+          <span class="sub">Scale ke 75% di Y5</span>
+        </div>
+        <div class="stat-tile">
+          <span class="lbl">CAC vs LTV (Client)</span>
+          <div class="split">
+            <div class="s-item">
+              <span class="s-lbl">CAC</span>
+              <span class="s-val">Rp 8.5 jt</span>
+            </div>
+            <div class="s-item">
+              <span class="s-lbl">LTV (24 bln)</span>
+              <span class="s-val">Rp 32 jt</span>
+            </div>
+          </div>
+        </div>
+        <div class="stat-tile hi-amber">
+          <span class="lbl">LTV / CAC Ratio</span>
+          <span class="val">3.8x</span>
+          <span class="sub" style="color:rgba(15,23,42,0.7)">Target Series A: 4x+</span>
+        </div>
+        <div class="stat-tile hi">
+          <span class="lbl">CAC Payback</span>
+          <span class="val">9 bulan</span>
+          <span class="sub" style="color:rgba(255,255,255,0.85)">Sehat untuk B2B vertical SaaS</span>
+        </div>
+      </div>
+
+      <div class="closing-strip">
+        <strong>Take rate growth path:</strong> 14% Y2 → 17% Y5 — margin expansion via Subscription Pro &amp; Data Insight.
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num">09 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 10 — Go to Market ===== -->
+  <section class="slide gtm" data-slide="10">
+    <div class="gtm-hero-img" style="background-image: url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1600&q=80&auto=format&fit=crop')"></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Go-to-Market</div>
+      <h1 class="slide-title">Three-wave launch.</h1>
+      <p class="lead" style="color:rgba(255,255,255,0.85)">Sequential vertical — film dulu (cycle pendek, terukur), lalu politik (cycle high-stakes), lalu horizontal brand &amp; NGO.</p>
+
+      <div class="gtm-timeline">
+        <div class="wave-step">
+          <span class="wave-label">Wave 1</span>
+          <span class="wave-month">Bulan 0–6</span>
+          <h3>Vertical Film</h3>
+          <ul>
+            <li>2 rumah produksi beta (Falcon, Visinema-tier)</li>
+            <li>500 advocate verified · Jakarta–Bandung fokus</li>
+            <li>Target: 5 judul film case study "before vs after"</li>
+            <li>Win: 1 viral campaign untuk PR push</li>
+          </ul>
+        </div>
+        <div class="wave-step">
+          <span class="wave-label">Wave 2</span>
+          <span class="wave-month">Bulan 7–12</span>
+          <h3>Vertical Politik (Pilkada 2027 prep)</h3>
+          <ul>
+            <li>Pilot dengan 1 tim sukses Pilkada</li>
+            <li>Compliance Bawaslu certification</li>
+            <li>Win: 1 publicly disclosed case study</li>
+            <li>3 retainer contracts → Recurring rev</li>
+          </ul>
+        </div>
+        <div class="wave-step">
+          <span class="wave-label">Wave 3</span>
+          <span class="wave-month">Bulan 13–18</span>
+          <h3>Brand &amp; NGO Horizontal</h3>
+          <ul>
+            <li>Self-service untuk FMCG &amp; telco</li>
+            <li>Partnership 5 NGO untuk awareness campaign</li>
+            <li>Mobile app launch · 5K advocate</li>
+            <li>Series A USD 5–8 jt — ekspansi SEA</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num">10 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 11 — Competition ===== -->
+  <section class="slide competition" data-slide="11">
+    <div class="slide-inner">
+      <div>
+        <div class="eyebrow">Competition</div>
+        <h1 class="slide-title">Tiga unfair advantages.</h1>
+        <p class="lead">Tidak ada incumbent yang punya kombinasi vertical-focus + compliance-grade + tier 4–5 community network.</p>
+
+        <div class="comp-matrix">
+          <div class="axis-arrow-y"></div>
+          <div class="axis-arrow-x"></div>
+          <div class="grid-line h"></div>
+          <div class="grid-line v"></div>
+          <div class="axis-y">Massive Reach ↑</div>
+          <div class="axis-x">Generic → Vertical &amp; Compliance →</div>
+
+          <!-- Quadrant labels (subtle) -->
+          <div style="position:absolute; top:40px; right:40px; font-family:var(--font-mono); font-size:9.5px; letter-spacing:1.4px; color:var(--muted-2); text-transform:uppercase; text-align:right;">Winners zone</div>
+          <div style="position:absolute; bottom:40px; left:40px; font-family:var(--font-mono); font-size:9.5px; letter-spacing:1.4px; color:var(--muted-2); text-transform:uppercase;">Manual ops</div>
+
+          <!-- Resonansi (target) -->
+          <div class="comp-dot hero" style="top:25%; left:78%"><span class="d"></span>Resonansi</div>
+          <!-- Partipost -->
+          <div class="comp-dot" style="top:30%; left:32%"><span class="d"></span>Partipost</div>
+          <!-- Sociabuzz -->
+          <div class="comp-dot" style="top:48%; left:24%"><span class="d"></span>Sociabuzz</div>
+          <!-- Aspire -->
+          <div class="comp-dot" style="top:55%; left:65%"><span class="d"></span>Aspire</div>
+          <!-- Talent Agency -->
+          <div class="comp-dot" style="top:78%; left:25%"><span class="d"></span>Talent Agency</div>
+          <!-- PR Agency -->
+          <div class="comp-dot" style="top:80%; left:68%"><span class="d"></span>PR Agency</div>
+        </div>
+      </div>
+
+      <div class="comp-side">
+        <div class="diff-card">
+          <div class="diff-num">1</div>
+          <div>
+            <h3>Compliance Bawaslu built-in</h3>
+            <p>Tidak ada platform Indonesia yang punya vertical politik dengan auto-disclosure PKPU compliant. Kami first.</p>
+          </div>
+        </div>
+        <div class="diff-card">
+          <div class="diff-num">2</div>
+          <div>
+            <h3>Tier 4–5 community lead network</h3>
+            <p>Citizen advocate &amp; community organizer yang tidak terjangkau Sociabuzz / Partipost. Butuh tahun untuk dicopy.</p>
+          </div>
+        </div>
+        <div class="diff-card">
+          <div class="diff-num">3</div>
+          <div>
+            <h3>CV-based semantic match</h3>
+            <p>Bukan keyword filter. AI memahami niche, demografi, lokasi, bahasa — dari raw CV upload.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num">11 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 12 — Team ===== -->
+  <section class="slide team" data-slide="12">
+    <div class="slide-inner">
+      <div class="eyebrow">Team</div>
+      <h1 class="slide-title">Founding Team.</h1>
+      <p class="lead">Tim yang sebelumnya membangun <strong>Kwikku</strong> (jejaring sosial asli Indonesia, 2013, UIN Maliki Malang) — sekarang fokus ke marketplace advocate vertikal politik &amp; film.</p>
+
+      <div class="team-grid">
+        <div class="founder-card">
+          <div class="portrait" style="background-image: url('https://ui-avatars.com/api/?name=Hamdi+Musaad&amp;size=600&amp;background=0B5FE0&amp;color=fff&amp;font-size=0.36&amp;bold=true')"></div>
+          <div class="body">
+            <span class="role">CEO · Founder</span>
+            <h3>Hamdi Musaad</h3>
+            <p class="bg-text">Founder &amp; CEO Kwikku. 12+ tahun bangun social platform Indonesia. Network rumah produksi &amp; agency.</p>
+          </div>
+        </div>
+        <div class="founder-card">
+          <div class="portrait" style="background-image: url('https://ui-avatars.com/api/?name=Ifa+Alif&amp;size=600&amp;background=FFB400&amp;color=1F2937&amp;font-size=0.36&amp;bold=true')"></div>
+          <div class="body">
+            <span class="role">CTO · Co-founder</span>
+            <h3>Ifa Alif</h3>
+            <p class="bg-text">Co-founder Kwikku. Owned matching engine &amp; search infra. AI/ML untuk semantic advocate-brief matching.</p>
+          </div>
+        </div>
+        <div class="founder-card">
+          <div class="portrait" style="background-image: url('https://ui-avatars.com/api/?name=Wim+Sonevel&amp;size=600&amp;background=475569&amp;color=fff&amp;font-size=0.36&amp;bold=true')"></div>
+          <div class="body">
+            <span class="role">CPO · Co-founder</span>
+            <h3>Wim Sonevel</h3>
+            <p class="bg-text">Co-founder Kwikku. Product &amp; growth lead. Spesialis vertical content marketing &amp; campaign workflow.</p>
+          </div>
+        </div>
+        <div class="founder-card">
+          <div class="portrait" style="background-image: url('https://ui-avatars.com/api/?name=Catur+Wibowo&amp;size=600&amp;background=059669&amp;color=fff&amp;font-size=0.36&amp;bold=true')"></div>
+          <div class="body">
+            <span class="role">COO · Co-founder</span>
+            <h3>Catur Priyo Wibowo</h3>
+            <p class="bg-text">Co-founder Kwikku. Operasi, partnership, BD. Memimpin sales enterprise &amp; partnership rumah produksi.</p>
+          </div>
+        </div>
+        <div class="founder-card">
+          <div class="portrait" style="background-image: url('https://ui-avatars.com/api/?name=Emil+Sabil&amp;size=600&amp;background=7C3AED&amp;color=fff&amp;font-size=0.36&amp;bold=true')"></div>
+          <div class="body">
+            <span class="role">CCO · Co-founder</span>
+            <h3>Emil Sabil</h3>
+            <p class="bg-text">Co-founder Kwikku. Creative &amp; brand design. Memimpin design system Resonansi &amp; brand identity.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="advisor-strip">
+        <span class="ad-label">Heritage &amp; Advisors</span>
+        <span class="ad-item">Alumni Kwikku (2013 — 40K+ users at launch)</span>
+        <span class="ad-item">Partner Big Four (strategy)</span>
+        <span class="ad-item">Mantan Komisioner KPI (compliance)</span>
+        <span class="ad-item">VP Marketing Major Studio</span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num">12 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 13 — Roadmap ===== -->
+  <section class="slide roadmap" data-slide="13">
+    <div class="slide-inner">
+      <div class="eyebrow">Roadmap</div>
+      <h1 class="slide-title">18 bulan ke Series A.</h1>
+      <p class="lead">Milestone-driven · setiap quarter ada gate yang harus dilewati sebelum scale next phase.</p>
+
+      <div class="roadmap-timeline">
+        <div class="roadmap-track"></div>
+        <div class="roadmap-stops">
+          <div class="road-stop above">
+            <div class="stop-dot"></div>
+            <div class="quarter">2026 Q2</div>
+            <h3>Foundation</h3>
+            <p>Tim inti, MVP, legal setup, brand identity</p>
+          </div>
+          <div class="road-stop below">
+            <div class="stop-dot"></div>
+            <div class="quarter">2026 Q3</div>
+            <h3>Beta Closed</h3>
+            <p>Vertical Film, 500 advocate, 2 rumah produksi</p>
+          </div>
+          <div class="road-stop above">
+            <div class="stop-dot"></div>
+            <div class="quarter">2026 Q4</div>
+            <h3>Launch Film publik</h3>
+            <p>3 rumah produksi anchor, 5 case study</p>
+          </div>
+          <div class="road-stop below">
+            <div class="stop-dot"></div>
+            <div class="quarter">2027 Q1</div>
+            <h3>Politik Pilot</h3>
+            <p>Compliance cert, 1 tim sukses Pilkada</p>
+          </div>
+          <div class="road-stop above">
+            <div class="stop-dot"></div>
+            <div class="quarter">2027 Q3</div>
+            <h3>Scale Phase</h3>
+            <p>5K advocate, 30 client aktif, mobile app</p>
+          </div>
+          <div class="road-stop below highlight">
+            <div class="stop-dot"></div>
+            <div class="quarter">2027 Q4</div>
+            <h3>Series A</h3>
+            <p>USD 5–8 jt, ekspansi Brand &amp; NGO + SEA</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="series-a-badge">Target Series A: GMV Rp 30 M run-rate · 50+ enterprise clients · <strong>Q4 2027</strong></div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num">13 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 14 — The Ask ===== -->
+  <section class="slide the-ask dark" data-slide="14">
+    <div class="slide-inner">
+      <div class="ask-main">
+        <div class="eyebrow">The Ask</div>
+        <h1><strong>Pre-Seed USD 1.2 juta</strong></h1>
+        <div class="rp-eq">≈ Rp 19 M · runway 18 bulan</div>
+
+        <div class="milestone-block">
+          <div class="m-lbl">Milestone untuk Series A</div>
+          <div class="milestone-list">
+            <div class="mi"><svg><use href="#i-check"/></svg>GMV Rp 30 M run-rate</div>
+            <div class="mi"><svg><use href="#i-check"/></svg>50+ enterprise clients</div>
+            <div class="mi"><svg><use href="#i-check"/></svg>5,000+ verified advocates</div>
+            <div class="mi"><svg><use href="#i-check"/></svg>Bawaslu/Kominfo cert</div>
+            <div class="mi"><svg><use href="#i-check"/></svg>3 vertikal aktif</div>
+            <div class="mi"><svg><use href="#i-check"/></svg>4x+ LTV/CAC sustained</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ask-side">
+        <div class="donut-wrap">
+          <svg viewBox="0 0 100 100">
+            <!-- circumference = 2 * pi * r. r=40 → C ≈ 251.327 -->
+            <!-- Engineering 38% -->
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#0B5FE0" stroke-width="20" stroke-dasharray="95.5 251.327" stroke-dashoffset="0"/>
+            <!-- Sales & BD 18% -->
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#FFB400" stroke-width="20" stroke-dasharray="45.24 251.327" stroke-dashoffset="-95.5"/>
+            <!-- Compliance 15% -->
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#16A34A" stroke-width="20" stroke-dasharray="37.7 251.327" stroke-dashoffset="-140.74"/>
+            <!-- Product & Design 12% -->
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#7C3AED" stroke-width="20" stroke-dasharray="30.16 251.327" stroke-dashoffset="-178.44"/>
+            <!-- Marketing 9% -->
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#06B6D4" stroke-width="20" stroke-dasharray="22.62 251.327" stroke-dashoffset="-208.6"/>
+            <!-- Operations 8% -->
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#475569" stroke-width="20" stroke-dasharray="20.11 251.327" stroke-dashoffset="-231.22"/>
+          </svg>
+          <div class="donut-center">
+            <span class="ttl">Use of Funds</span>
+            <span class="amt">USD 1.2M</span>
+          </div>
+        </div>
+
+        <div class="legend-row">
+          <div class="li"><span class="sq" style="background:#0B5FE0"></span>Engineering<span class="pc">38%</span></div>
+          <div class="li"><span class="sq" style="background:#FFB400"></span>Sales &amp; BD<span class="pc">18%</span></div>
+          <div class="li"><span class="sq" style="background:#16A34A"></span>Compliance<span class="pc">15%</span></div>
+          <div class="li"><span class="sq" style="background:#7C3AED"></span>Product &amp; Design<span class="pc">12%</span></div>
+          <div class="li"><span class="sq" style="background:#06B6D4"></span>Marketing<span class="pc">9%</span></div>
+          <div class="li"><span class="sq" style="background:#475569"></span>Operations<span class="pc">8%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand" style="color:rgba(255,255,255,0.5)">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num" style="color:rgba(255,255,255,0.5)">14 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 15 — Why Us ===== -->
+  <section class="slide why-us" data-slide="15">
+    <div class="slide-inner">
+      <div class="eyebrow">Why Us · Why Now</div>
+      <h1 class="slide-title">Tiga alasan ini wajib didanai sekarang.</h1>
+      <p class="lead">Bukan "another marketplace". Ini timing + insight + network advantage yang sulit ditiru — apalagi kalau kompetitor harus mulai dari nol.</p>
+
+      <div class="reasons">
+        <div class="reason-card">
+          <div class="big-num">01</div>
+          <div class="small-num">REGULASI WINDOW</div>
+          <h3>18 bulan ke Pilkada 2027.</h3>
+          <p>First-mover compliance moat = winner-takes-most. Begitu kami punya Bawaslu cert + 3 case study disclosed, switching cost untuk klien tier-1 sangat tinggi.</p>
+          <div class="kicker">Window tertutup awal 2027 →</div>
+        </div>
+
+        <div class="reason-card">
+          <div class="big-num">02</div>
+          <div class="small-num">UNIK REFRAMING</div>
+          <h3>Stigma "buzzer" adalah keunggulan kompetitif.</h3>
+          <p>Kami punya ide jelas cara reframing — KYC, auto-disclosure, escrow, anti-bot. Tidak ada incumbent yang berani menyentuh kategori ini secara serius.</p>
+          <div class="kicker">Defensible positioning →</div>
+        </div>
+
+        <div class="reason-card">
+          <div class="big-num">03</div>
+          <div class="small-num">UNFAIR ADVANTAGE</div>
+          <h3>Tier 4–5 community network adalah unfair advantage.</h3>
+          <p>Inilah yang membuat "buzzer marketplace" menjadi "advocacy infrastructure" — sulit dicopy karena butuh tahun membangun trust dengan komunitas grass-root.</p>
+          <div class="kicker">Network moat compounds →</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="brand">Resonansi · Pre-Seed Pitch · 2026</span>
+      <span class="num">15 / 16</span>
+    </div>
+  </section>
+
+  <!-- ===== Slide 16 — Closing ===== -->
+  <section class="slide closing dark" data-slide="16">
+    <div class="accent-shape"></div>
+    <div class="slide-inner">
+      <p class="quote-1">Bukan kami yang membuat suara.</p>
+      <p class="quote-2">Kami membuat suara itu didengar — <strong>secara akuntabel.</strong></p>
+
+      <div class="footer-mark">
+        <div class="brand-mark">Resonansi</div>
+        <div class="mark-line">
+          <span>founders@resonansi.id</span>
+          <span class="sep"></span>
+          <span>resonansi.id</span>
+          <span class="sep"></span>
+          <span>Pre-Seed · 2026</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     Deck navigation (bottom strip)
+============================================================ -->
+<nav class="deck-nav" aria-label="Slide navigation">
+  <button class="nav-btn" id="navPrev" aria-label="Previous slide">
+    <svg><use href="#i-arrow-left"/></svg>
+  </button>
+  <div class="slide-counter">
+    <span id="curNum">01</span><span class="total"> / 16</span>
+  </div>
+  <div class="slide-dots" id="slideDots"></div>
+  <button class="nav-btn" id="navNext" aria-label="Next slide">
+    <svg><use href="#i-arrow-right"/></svg>
+  </button>
+</nav>
+
+<!-- ============================================================
+     Demo drawer
+============================================================ -->
+<div id="demoBackdrop" class="demo-backdrop"></div>
+<aside id="demoDrawer" class="demo-drawer" aria-hidden="true">
+  <div class="demo-drawer-head">
+    <div>
+      <strong>Resonansi · Demo Index</strong>
+      <p>Klik halaman mana saja untuk berpindah. Tekan Esc untuk tutup.</p>
+    </div>
+    <button class="demo-close" id="demoClose" aria-label="Tutup">×</button>
+  </div>
+  <div class="demo-drawer-body">
+    <div class="demo-group">
+          <div class="demo-group-label">⚙ AUTH</div>
+          <a class="drawer-link" href="login.html">Masuk (Login)</a>
+          <a class="drawer-link" href="signup.html">Daftar (Sign Up)</a>
+          <a class="drawer-link" href="forgot-password.html">Lupa Password</a>
+          <a class="drawer-link" href="reset-password.html">Reset Password</a>
+          <a class="drawer-link" href="email-verify.html">Verifikasi Email</a>
+          <a class="drawer-link" href="welcome.html">Welcome / Tour</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">⚙ DESIGN SYSTEM</div>
+          <a class="drawer-link" href="design-system.html">Design System Showcase</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">MARKETING</div>
+          <a class="drawer-link" href="index.html">Homepage</a>
+          <a class="drawer-link" href="how-it-works-client.html">How it Works — Client</a>
+          <a class="drawer-link" href="how-it-works-advocate.html">How it Works — Advocate</a>
+          <a class="drawer-link" href="solutions.html">Solutions per Industri</a>
+          <a class="drawer-link" href="about.html">Tentang Resonansi</a>
+          <a class="drawer-link" href="trust.html">Trust &amp; Safety</a>
+          <a class="drawer-link" href="faq.html">FAQ / Pusat Bantuan</a>
+          <a class="drawer-link" href="contact.html">Kontak / Demo Request</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">VERTIKAL</div>
+          <a class="drawer-link" href="film.html">Halaman Film</a>
+          <a class="drawer-link" href="politik.html">Halaman Politik</a>
+          <a class="drawer-link" href="browse.html">Browse Advocates</a>
+          <a class="drawer-link" href="pricing.html">Pricing</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">CLIENT (DASHBOARD)</div>
+          <a class="drawer-link" href="client/dashboard.html">Dashboard Home</a>
+          <a class="drawer-link" href="client/brief.html">Buat Brief (Wizard)</a>
+          <a class="drawer-link" href="client/brief-detail.html">Brief Detail</a>
+          <a class="drawer-link" href="client/campaigns.html">Kampanye (List)</a>
+          <a class="drawer-link" href="client/shortlist.html">Shortlist Advocate</a>
+          <a class="drawer-link" href="client/advocate-detail.html">Advocate Detail</a>
+          <a class="drawer-link" href="client/approval.html">Content Approval</a>
+          <a class="drawer-link" href="client/live-campaign.html">Live Campaign</a>
+          <a class="drawer-link" href="client/library.html">Advocate Library</a>
+          <a class="drawer-link" href="client/analytics.html">Analytics</a>
+          <a class="drawer-link" href="client/billing.html">Billing &amp; Invoices</a>
+          <a class="drawer-link" href="client/settings.html">Settings</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">ADVOCATE</div>
+          <a class="drawer-link" href="advocate/onboarding.html">Onboarding (Mobile)</a>
+          <a class="drawer-link" href="advocate/mobile.html">Mobile App</a>
+          <a class="drawer-link" href="advocate/profile.html">Profile Editor</a>
+          <a class="drawer-link" href="advocate/campaigns.html">My Campaigns</a>
+          <a class="drawer-link" href="advocate/apply-brief.html">Apply ke Brief</a>
+          <a class="drawer-link" href="advocate/inbox.html">Inbox / Chat</a>
+          <a class="drawer-link" href="advocate/verification.html">Verification Center</a>
+          <a class="drawer-link" href="advocate/tax-receipt.html">Bukti Potong PPh</a>
+        </div>
+
+        <div class="demo-group">
+          <div class="demo-group-label">PAGES TAMBAHAN</div>
+          <a class="drawer-link" href="case-study-detail.html">Studi Kasus — Detail</a>
+          <a class="drawer-link" href="blog-detail.html">Blog — Artikel</a>
+          <a class="drawer-link" href="career.html">Karir</a>
+          <a class="drawer-link" href="press.html">Press &amp; Media</a>
+          <a class="drawer-link" href="trust-audit.html">Trust Audit Publik</a>
+          <a class="drawer-link" href="dispute.html">Laporkan Sengketa</a>
+          <a class="drawer-link" href="notifications.html">Notification Center</a>
+          <a class="drawer-link" href="404.html">404 — Not Found</a>
+        </div>
+  </div>
+</aside>
+
+<!-- ============================================================
+     Script — slide navigation
+============================================================ -->
+<script>
+(function() {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var current = 0;
+  var navPrev = document.getElementById('navPrev');
+  var navNext = document.getElementById('navNext');
+  var curNum = document.getElementById('curNum');
+  var dotsContainer = document.getElementById('slideDots');
+
+  // Build dots
+  for (var i = 0; i < total; i++) {
+    var d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('data-go', i);
+    d.title = 'Slide ' + (i + 1);
+    dotsContainer.appendChild(d);
+  }
+  var dots = Array.prototype.slice.call(dotsContainer.querySelectorAll('.dot'));
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function go(idx) {
+    if (idx < 0) idx = 0;
+    if (idx > total - 1) idx = total - 1;
+    if (idx === current) return;
+
+    slides[current].classList.remove('active');
+    slides[current].classList.add(idx > current ? 'prev' : '');
+    slides[idx].classList.remove('prev');
+    slides[idx].classList.add('active');
+
+    // Clean up the prev class on the now-hidden ones after transition
+    setTimeout(function() {
+      slides.forEach(function(s, i) {
+        if (i !== idx) s.classList.remove('prev');
+      });
+    }, 600);
+
+    current = idx;
+    curNum.textContent = pad(idx + 1);
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+    // Cyclic navigation: never disable prev/next — wraps around at boundaries
+    navPrev.disabled = false;
+    navNext.disabled = false;
+
+    // Update URL hash for deep linking
+    history.replaceState(null, '', '#slide-' + (idx + 1));
+  }
+
+  // Cyclic: next at last slide goes to first; prev at first goes to last
+  function next() { go((current + 1) % total); }
+  function prev() { go((current - 1 + total) % total); }
+
+  navNext.addEventListener('click', next);
+  navPrev.addEventListener('click', prev);
+  dotsContainer.addEventListener('click', function(e) {
+    var t = e.target;
+    if (t.classList.contains('dot')) {
+      go(parseInt(t.getAttribute('data-go'), 10));
+    }
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    // Don't intercept when drawer is open
+    var drawerOpen = document.getElementById('demoDrawer').classList.contains('open');
+
+    if (e.key === 'Escape') {
+      if (drawerOpen) {
+        closeDrawer();
+      } else {
+        openDrawer();
+      }
+      e.preventDefault();
+      return;
+    }
+    if (drawerOpen) return;
+
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+      next();
+      e.preventDefault();
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      prev();
+      e.preventDefault();
+    } else if (e.key === 'Home') {
+      go(0);
+      e.preventDefault();
+    } else if (e.key === 'End') {
+      go(total - 1);
+      e.preventDefault();
+    }
+  });
+
+  // Touch/swipe support (basic)
+  var touchStartX = null;
+  document.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    if (touchStartX === null) return;
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 60) {
+      if (dx < 0) next(); else prev();
+    }
+    touchStartX = null;
+  }, { passive: true });
+
+  // Honor URL hash on load
+  var hashMatch = location.hash.match(/^#slide-(\d+)$/);
+  if (hashMatch) {
+    var n = parseInt(hashMatch[1], 10) - 1;
+    if (n > 0 && n < total) {
+      // jump without animation
+      slides[0].classList.remove('active');
+      slides[n].classList.add('active');
+      current = n;
+      curNum.textContent = pad(n + 1);
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === n); });
+      navPrev.disabled = false;
+      navNext.disabled = false;
+    }
+  }
+
+  // Cyclic: never disabled
+  navPrev.disabled = false;
+  navNext.disabled = false;
+
+  // ===== Demo drawer =====
+  var drawer = document.getElementById('demoDrawer');
+  var backdrop = document.getElementById('demoBackdrop');
+  var toggle = document.getElementById('demoToggle');
+  var closeBtn = document.getElementById('demoClose');
+
+  function openDrawer() {
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+  }
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+  }
+  toggle.addEventListener('click', openDrawer);
+  closeBtn.addEventListener('click', closeDrawer);
+  backdrop.addEventListener('click', closeDrawer);
+})();
+</script>
+
+</body>
+</html>
