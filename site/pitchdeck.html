@@ -3227,13 +3227,29 @@
 
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
-  function go(idx) {
-    if (idx < 0) idx = 0;
-    if (idx > total - 1) idx = total - 1;
+  function go(idx, dir) {
+    // Normalize idx into valid range (cyclic-safe)
+    idx = ((idx % total) + total) % total;
     if (idx === current) return;
 
+    // Infer direction if not provided. dir: 1 = forward, -1 = backward
+    var forward;
+    if (dir === 1 || dir === -1) {
+      forward = dir === 1;
+    } else {
+      forward = idx > current;
+    }
+
     slides[current].classList.remove('active');
-    slides[current].classList.add(idx > current ? 'prev' : '');
+    // Only add the 'prev' class when going forward (so the outgoing slide
+    // slides left). Going backward, outgoing slide returns to default
+    // (translateX 40px) so it slides out to the right.
+    // NOTE: never call classList.add('') — empty string throws DOMException.
+    if (forward) {
+      slides[current].classList.add('prev');
+    } else {
+      slides[current].classList.remove('prev');
+    }
     slides[idx].classList.remove('prev');
     slides[idx].classList.add('active');
 
@@ -3256,8 +3272,8 @@
   }
 
   // Cyclic: next at last slide goes to first; prev at first goes to last
-  function next() { go((current + 1) % total); }
-  function prev() { go((current - 1 + total) % total); }
+  function next() { go((current + 1) % total, 1); }
+  function prev() { go((current - 1 + total) % total, -1); }
 
   navNext.addEventListener('click', next);
   navPrev.addEventListener('click', prev);
